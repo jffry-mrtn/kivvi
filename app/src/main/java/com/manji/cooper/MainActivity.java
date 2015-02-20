@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.manji.cooper.MainFragment;
 import com.manji.cooper.adapter.DrawerAdapter;
 
 
