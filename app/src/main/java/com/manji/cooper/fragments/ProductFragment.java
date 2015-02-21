@@ -1,10 +1,10 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,10 +17,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.manji.cooper.R;
+import com.manji.cooper.adapter.ProductAdapter;
+import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.model.Constants;
+
+import java.util.ArrayList;
 
 public class ProductFragment extends Fragment {
 
+    private ArrayList<CSVData> data;
     private Context context;
     private View layoutView;
     private ActionMode actionMode;
@@ -29,6 +34,7 @@ public class ProductFragment extends Fragment {
     private Button cancelButton;
     private ListView productListView;
     private EditText enterProductEditText;
+    private ProductAdapter productAdapter;
 
     public ProductFragment() {
         super();
@@ -43,7 +49,26 @@ public class ProductFragment extends Fragment {
         productListView = (ListView) layoutView.findViewById(R.id.product_listview);
         saveProductButton = (Button) layoutView.findViewById(R.id.save_product_button);
         cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
-        
+
+        productAdapter = new ProductAdapter(context, data);
+        productListView.setAdapter(productAdapter);
+
+        // Text Watcher for the Filterable
+        enterProductEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                productAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
         saveProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,30 +78,28 @@ public class ProductFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popFragment();
             }
         });
-
         return layoutView;
     }
 
-    private void popFragment() {
-        getActivity().onBackPressed();
+    public void setData(ArrayList<CSVData> csvData) {
+        this.data = csvData;
     }
 
     /** Search **/
     public void search(CharSequence query) {
         if (query.length() > 0) {
-//            mainAdapter.getFilter().filter(query);
+            productAdapter.getFilter().filter(query);
         }
     }
 
     public void clearSearchFilter() {
-//        mainAdapter.getFilter().filter("");
+        productAdapter.getFilter().filter("");
 
-//        mainAdapter = new MainAdapter(context);
-//        mainListView.setAdapter(mainAdapter);
-//        mainAdapter.notifyDataSetChanged();
+        productAdapter = new ProductAdapter(context, data);
+        productListView.setAdapter(productAdapter);
+        productAdapter.notifyDataSetChanged();
     }
 
     public void clearItemSelection() {

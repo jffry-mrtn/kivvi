@@ -1,6 +1,7 @@
 package com.manji.cooper;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -23,9 +24,11 @@ import android.widget.RelativeLayout;
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.fragments.MainFragment;
+import com.manji.cooper.fragments.ProductFragment;
 import com.manji.cooper.fragments.ScannerFragment;
 import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
+import com.manji.cooper.model.Constants;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private SearchView searchView;
 
     private DataManager dataManager;
+    private ArrayList<CSVData> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +221,16 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         toolbar.setTitle(title);
     }
 
+    public void showProductFragment() {
+        ProductFragment productFragment = new ProductFragment();
+        productFragment.setData(data);
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
+                .replace(R.id.frame, productFragment, Constants.PRODUCT_FRAGMENT_TAG);
+
+        fragmentTransaction.commit();
+    }
+
     private class DrawerClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -239,5 +253,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     @Override
     public void onDataRetrieved(ArrayList<CSVData> data) {
         Log.d(TAG, "Data retrieved");
+        this.data = data;
     }
 }

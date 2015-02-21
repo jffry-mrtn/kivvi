@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.model.Constants;
 
@@ -70,10 +71,7 @@ public class MainFragment extends Fragment {
     }
 
     private void showEnterProduct() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
-                .replace(R.id.frame, new ProductFragment(), Constants.PRODUCT_FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
+        ((MainActivity) getActivity()).showProductFragment();
     }
 
     @Override
