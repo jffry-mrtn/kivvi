@@ -43,5 +43,6 @@
     <!--Outpan API key-->
     <string name="outpan_api_key">0651caccf5f32e7858620cf7778e817b</string>
     <string name="get_nutrition">Get Nutrition</string>
+    <string name="product_search_hint">Enter a product to view results</string>
 
 </resources>

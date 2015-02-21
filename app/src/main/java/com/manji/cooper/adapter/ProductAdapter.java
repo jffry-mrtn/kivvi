@@ -91,7 +91,13 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredData = (ArrayList<String>) results.values;
+                try {
+                    filteredData = (ArrayList<String>) results.values;
+                } catch (ClassCastException e) {
+                    // Handle empty case
+                    filteredData = new ArrayList<String>();
+                }
+
                 notifyDataSetChanged();
             }
         };

@@ -8,9 +8,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
@@ -30,6 +32,7 @@ public class ProductFragment extends Fragment {
     private ListView productListView;
     private EditText enterProductEditText;
     private ProductAdapter productAdapter;
+    private TextView hintTextView;
 
     public ProductFragment() {
         super();
@@ -40,11 +43,14 @@ public class ProductFragment extends Fragment {
         layoutView = inflater.inflate(R.layout.fragment_product, container, false);
         context = getActivity().getApplicationContext();
 
+        hintTextView = (TextView) layoutView.findViewById(R.id.product_search_hint);
         enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
         productListView = (ListView) layoutView.findViewById(R.id.product_listview);
 
         productAdapter = new ProductAdapter(context);
         productListView.setAdapter(productAdapter);
+
+        productListView.setOnItemClickListener(new productListViewOnClickListener());
 
         // Text Watcher for the Filterable
         enterProductEditText.addTextChangedListener(new TextWatcher() {
@@ -54,6 +60,12 @@ public class ProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    hintTextView.setVisibility(View.INVISIBLE);
+                } else {
+                    hintTextView.setVisibility(View.VISIBLE);
+                }
+
                 productAdapter.getFilter().filter(s);
             }
 
@@ -93,5 +105,13 @@ public class ProductFragment extends Fragment {
 
     public void clearItemSelection() {
         productAdapter.notifyDataSetChanged();
+    }
+
+    private class productListViewOnClickListener implements android.widget.AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            productAdapter.getItem(position);
+
+        }
     }
 }
