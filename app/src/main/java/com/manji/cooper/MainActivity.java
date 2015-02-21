@@ -36,13 +36,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerAdapter drawerAdapter;
 
     private Toolbar toolbar;
-
-    private FloatingActionsMenu fabMenu;
-    private FloatingActionButton fabCreateNote;
-    private FloatingActionButton fabCreateFolder;
-
     private View frameLayout;
-
     private SearchView searchView;
 
     @Override
@@ -88,8 +82,6 @@ public class MainActivity extends ActionBarActivity {
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
-
-        fabMenu = (FloatingActionsMenu) findViewById(R.id.fab);
 
         // Set up the fragments
         mainFragment = new MainFragment();
