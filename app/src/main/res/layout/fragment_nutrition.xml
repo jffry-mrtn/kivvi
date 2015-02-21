@@ -36,6 +36,7 @@
                 android:id="@+id/food_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:textColor="@color/dark_grey" />
         </LinearLayout>
 
@@ -92,6 +93,13 @@
                 android:layout_marginTop="15dp"
                 android:max="100" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nutrition_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical" />
 
         <Button
             android:id="@+id/save_product"

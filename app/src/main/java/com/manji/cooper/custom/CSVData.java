@@ -74,7 +74,7 @@ public class CSVData implements Serializable{
      * Return the value of the specified attribute from the specified entry
      */
     public String getValue(String key, String attribute){
-        if (attributeNames == null) return "";
+        if (attributeNames == null || attributeNames.indexOf(attribute) == -1) return "";
 
         return getEntry(key).get(attributeNames.indexOf(attribute));
     }
