@@ -86,6 +86,12 @@ public class ProductFragment extends Fragment {
 
     public void setData(ArrayList<CSVData> csvData) {
         this.data = csvData;
+
+        if (productListView != null) {
+            productAdapter = new ProductAdapter(context, data);
+            productListView.setAdapter(productAdapter);
+            productAdapter.notifyDataSetChanged();
+        }
     }
 
     /** Search **/

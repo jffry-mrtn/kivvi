@@ -228,5 +228,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     public void onDataRetrieved(ArrayList<CSVData> data) {
         Log.d(TAG, "Data retrieved");
         this.data = data;
+        productFragment.setData(this.data);
     }
 }
