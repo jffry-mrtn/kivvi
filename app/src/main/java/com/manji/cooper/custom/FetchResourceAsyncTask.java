@@ -1,6 +1,7 @@
 package com.manji.cooper.custom;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.manji.cooper.listeners.OnResourceFetchedListener;
 import com.manji.cooper.utils.Utility;
@@ -16,9 +17,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by douglaspereira on 2015-02-07.
+ * Created by douglaspereira on 2015-02-20.
  */
 public class FetchResourceAsyncTask extends AsyncTask {
+
+    private final String TAG = FetchResourceAsyncTask.class.getSimpleName();
 
     private String url = null;
     private OnResourceFetchedListener listener = null;
@@ -30,6 +33,8 @@ public class FetchResourceAsyncTask extends AsyncTask {
 
     @Override
     protected String doInBackground(Object[] params) {
+
+        Log.d(TAG, "Fetching resource from url: " + url);
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);

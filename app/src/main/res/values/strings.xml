@@ -12,9 +12,14 @@
     <string name="search">Search</string>
     <string name="search_hint">Search items</string>
 
+    <!--CSV Resource urls-->
+    <string name="nutrient_value_2008_eggs">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/eggs_oeufs/nutrient_value_eggs_and_egg_dishes_2008_valeur_nutritive_oeufs_et_plats_base_oeufs-eng.csv</string>
+    <string name="nutrient_value_2008_baked_goods">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/baked-goods_boulangerie/nutrient_value_baked_2008_valeur_nutritive_boulangerie-eng.csv</string>
+    <string name="nutrient_value_2008_beverages">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/beverages_boissons/nutrient_value_beverages_2008_valeur_nutritive_boissons-eng.csv</string>
+    <string name="nutrient_value_2008_grains">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/breads-pains/nutrient_value_breads_cereals_and_other_grain_products_2008_valeur_nutritive_pains_cereales_et_autres_produits_cerealiers-eng.csv</string>
+
 
     <string name="csv_attributes_names">_attribute_names_</string>
     <string name="csv_attributes_units">_attributes_units_</string>
-    <string name="nutrient_value_2008_eggs">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/eggs_oeufs/nutrient_value_eggs_and_egg_dishes_2008_valeur_nutritive_oeufs_et_plats_base_oeufs-eng.csv</string>
-
+    
 </resources>

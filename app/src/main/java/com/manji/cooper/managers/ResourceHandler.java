@@ -1,5 +1,7 @@
 package com.manji.cooper.managers;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +13,7 @@ import com.manji.cooper.custom.Resource;
 import com.manji.cooper.listeners.OnResourceFetchedListener;
 
 /**
- * Created by douglaspereira on 2015-02-19.
+ * Created by douglaspereira on 2015-02-20.
  */
 public class ResourceHandler implements OnResourceFetchedListener {
 
@@ -49,7 +51,11 @@ public class ResourceHandler implements OnResourceFetchedListener {
                             : (isXML(response) ? Resource.Type.XML
                             : Resource.Type.OTHER));
 
-        listener.onRetrieved(new Resource(response, type));
+        Resource r = new Resource(response, type);
+
+        Log.d(TAG, "Retrieved resource: " + r);
+
+        listener.onRetrieved(r);
     }
 
     @Override

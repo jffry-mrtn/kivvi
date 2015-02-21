@@ -1,7 +1,7 @@
 package com.manji.cooper.custom;
 
 /**
- * Created by douglaspereira on 2015-02-19.
+ * Created by douglaspereira on 2015-02-20.
  */
 public class Resource{
 

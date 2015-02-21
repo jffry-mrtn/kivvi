@@ -1,7 +1,7 @@
 package com.manji.cooper.listeners;
 
 /**
- * Created by douglaspereira on 2015-02-07.
+ * Created by douglaspereira on 2015-02-20.
  */
 public interface OnResourceFetchedListener {
 

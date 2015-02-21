@@ -8,6 +8,7 @@ import com.manji.cooper.custom.CSVParser;
 import com.manji.cooper.custom.Resource;
 import com.manji.cooper.utils.Utility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,9 +16,11 @@ import java.util.HashMap;
  */
 public class DataManager {
 
+    private final String TAG = DataManager.class.getSimpleName();
+
     private static DataManager instance;
 
-    private HashMap<String, CSVData> data;
+    private ArrayList<CSVData> data;
     private CSVParser csvParser;
 
     private String[] resources;
@@ -27,13 +30,17 @@ public class DataManager {
     private Resource.OnRetrievedListener csvRetrievedListn = new Resource.OnRetrievedListener() {
         @Override
         public void onRetrieved(Resource resource) {
-            Log.d("CSV response", resource.getContent());
             CSVData csvData = csvParser.parseCSV(resource.getContent());
 
-            data.put(csvData.hashCode()+"", csvData);
+            Log.d(TAG, "Parsed csv: " + csvData.getClass());
+
+
+            data.add(csvData);
             dataRetrieved++;
 
             if (isDone()){
+                Log.d(TAG, "Retrieved all CSV resources: " + data.size());
+
                 //Callback or notify that all set have been retrieved
             }
         }
@@ -54,10 +61,14 @@ public class DataManager {
 
     private DataManager(){
         csvParser = new CSVParser();
-        data = new HashMap<>();
+        data = new ArrayList<>();
 
         resources = new String[] {
-            Utility.activity.getResources().getString(R.string.nutrient_value_2008_eggs)};
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_eggs),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_baked_goods),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_beverages),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_grains),
+            };
 
         initDataSets();
 
@@ -66,7 +77,8 @@ public class DataManager {
     private void initDataSets(){
         ResourceHandler rh = ResourceHandler.getInstance();
 
-        //fetch all data sets
+        Log.d(TAG, "Fetching CSV resources");
+
         for (String s: resources){
             rh.getResource(s, csvRetrievedListn);
         }

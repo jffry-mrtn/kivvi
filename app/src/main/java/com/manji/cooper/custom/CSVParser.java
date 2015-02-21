@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by douglaspereira on 2015-02-07.
+ * Created by douglaspereira on 2015-02-20.
  */
 public class CSVParser {
 
@@ -17,6 +17,12 @@ public class CSVParser {
 
     }
 
+    /* Parse CSV resource String
+
+     * This parsing algorithm is specific to the 'Nutrient Value of some Common Foods, 2008'
+     * government data sets
+     *
+     */
     public CSVData parseCSV(String csv){
         String[] content = csv.split("\\n");
         HashMap<String, List<String>> csvObjectData = new HashMap();
@@ -39,6 +45,7 @@ public class CSVParser {
 
         String[] data = Arrays.copyOfRange(content, index + 2, content.length);
 
+        //append key-value pair for each line in csv resource
         for (String line : data){
             String key = parseKey(line);
             ArrayList<String> entries = parseEntries(line, key);
@@ -59,6 +66,9 @@ public class CSVParser {
 
     }
 
+    /* Parse the first value as the key
+     *
+     */
     private String parseKey(String entry){
         if (entry == null || entry.length() < 2) return null;
 
@@ -76,6 +86,9 @@ public class CSVParser {
         return key;
     }
 
+    /* Parse the values that belong to the item (key)
+     *
+     */
     private ArrayList<String> parseEntries(String entry, String key){
         if (key == null) return null;
         String attributes = entry.substring(key.length()+1);
