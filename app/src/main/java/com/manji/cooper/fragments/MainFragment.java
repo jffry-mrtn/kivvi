@@ -1,6 +1,7 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -61,7 +62,10 @@ public class MainFragment extends Fragment {
     }
 
     private void showCamera() {
-
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, new ScannerFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private void showEnterProduct() {

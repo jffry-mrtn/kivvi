@@ -74,7 +74,7 @@
             android:padding="10dp"
             android:hint="@string/enter_product"
             android:textColor="@color/dark_grey"
-            android:background="@color/grey" />
+            android:background="@drawable/action_button" />
 
         <ImageButton
             android:id="@+id/scan_barcode_button"
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:src="@drawable/ic_camera"
-            android:background="@color/grey"/>
+            android:background="@drawable/action_button" />
     </LinearLayout>
 
         <!-- History -->
