@@ -4,14 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="36dp"
-    android:paddingRight="36dp"
     android:background="#EBEBEB">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp">
 
         <!-- Dashboard -->
         <LinearLayout
@@ -59,15 +59,31 @@
                 android:textAllCaps="true" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/enter_product_edittext"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/enter_field">
+
+        <Button
+            android:id="@+id/enter_product_button"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="0.8"
             android:padding="10dp"
-            android:drawableRight="@drawable/ic_camera"
             android:hint="@string/enter_product"
             android:textColor="@color/dark_grey"
-            android:background="@drawable/enter_field" />
+            android:background="@drawable/action_button" />
+
+        <ImageButton
+            android:id="@+id/scan_barcode_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_camera"
+            android:background="@drawable/action_button" />
+    </LinearLayout>
 
         <!-- History -->
         <LinearLayout

@@ -1,6 +1,7 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -11,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +25,8 @@ public class MainFragment extends Fragment {
     private ActionMode actionMode;
 
     private ListView historyListView;
-    private EditText enterProductEditText;
+    private ImageButton barcodeButton;
+    private Button enterProductButton;
     private TextView caloriesTextView;
 
 
@@ -38,10 +40,35 @@ public class MainFragment extends Fragment {
         context = getActivity().getApplicationContext();
 
         caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
-        enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
+        barcodeButton = (ImageButton) layoutView.findViewById(R.id.scan_barcode_button);
+        enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
         historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
         
+        barcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCamera();
+            }
+        });
+
+        enterProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEnterProduct();
+            }
+        });
+
         return layoutView;
+    }
+
+    private void showCamera() {
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, new ScannerFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void showEnterProduct() {
     }
 
     @Override
