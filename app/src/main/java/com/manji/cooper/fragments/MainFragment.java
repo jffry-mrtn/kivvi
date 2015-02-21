@@ -10,7 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.manji.cooper.R;
 
@@ -19,7 +21,11 @@ public class MainFragment extends Fragment {
     private Context context;
     private View layoutView;
     private ActionMode actionMode;
-    private ListView mainListView;
+
+    private ListView historyListView;
+    private Button barcodeButton;
+    private Button enterProductButton;
+    private TextView caloriesTextView;
 
 
     public MainFragment() {
@@ -30,7 +36,23 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutView = inflater.inflate(R.layout.main_fragment, container, false);
         context = getActivity().getApplicationContext();
+
+        caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
+        barcodeButton = (Button) layoutView.findViewById(R.id.barcode_button);
+        enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
+        historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
+        
+        enterProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEnterProduct();
+            }
+        });
+        
         return layoutView;
+    }
+
+    private void showEnterProduct() {
     }
 
     @Override
@@ -91,7 +113,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-            final int numSelected = mainListView.getCheckedItemCount();
+            final int numSelected = historyListView.getCheckedItemCount();
 
             switch (numSelected) {
                 case 0:
