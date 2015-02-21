@@ -23,6 +23,7 @@ public class DataManager {
 
     private ArrayList<CSVData> data;
     private CSVParser csvParser;
+    private ArrayList<String> itemNames;
 
     private String[] resources;
 
@@ -37,14 +38,15 @@ public class DataManager {
 
             Log.d(TAG, "Parsed csv: " + csvData.getClass());
 
-
             data.add(csvData);
+            itemNames.addAll(csvData.getKeys());
+
             dataRetrieved++;
 
             if (isDone()){
                 Log.d(TAG, "Retrieved all CSV resources: " + data.size());
 
-                onDataRetrievedListener.onDataRetrieved(data);
+                onDataRetrievedListener.onDataRetrieved(data, itemNames);
                 //Callback or notify that all set have been retrieved
             }
         }
@@ -66,6 +68,7 @@ public class DataManager {
     private DataManager(){
         csvParser = new CSVParser();
         data = new ArrayList<>();
+        itemNames = new ArrayList<>();
 
         resources = new String[] {
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_eggs),

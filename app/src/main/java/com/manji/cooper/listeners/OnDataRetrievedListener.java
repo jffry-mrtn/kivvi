@@ -8,5 +8,5 @@ import java.util.ArrayList;
  * Created by douglaspereira on 2015-02-21.
  */
 public interface OnDataRetrievedListener {
-    public void onDataRetrieved(ArrayList<CSVData> data);
+    public void onDataRetrieved(ArrayList<CSVData> data, ArrayList<String> itemNames);
 }

@@ -59,8 +59,8 @@ public class CSVParser {
         obj.setAttributeNames(attributesNames);
         obj.setAttributeUnits(attributesUnits);
 
-        csvObjectData.put(Utility.activity.getResources().getString(R.string.csv_attributes_names), attributesNames);
-        csvObjectData.put(Utility.activity.getResources().getString(R.string.csv_attributes_units), attributesUnits);
+//        csvObjectData.put(Utility.activity.getResources().getString(R.string.csv_attributes_names), attributesNames);
+//        csvObjectData.put(Utility.activity.getResources().getString(R.string.csv_attributes_units), attributesUnits);
 
         return obj;
 
