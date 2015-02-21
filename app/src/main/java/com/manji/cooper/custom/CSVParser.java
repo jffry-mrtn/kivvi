@@ -3,6 +3,7 @@ package com.manji.cooper.custom;
 import com.manji.cooper.R;
 import com.manji.cooper.utils.Utility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by douglaspereira on 2015-02-20.
  */
-public class CSVParser {
+public class CSVParser implements Serializable{
 
     public CSVParser(){
 

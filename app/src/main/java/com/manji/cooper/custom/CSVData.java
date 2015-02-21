@@ -3,8 +3,7 @@ package com.manji.cooper.custom;
 
 import android.content.Context;
 
-import com.manji.cooper.R;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * Created by douglaspereira on 2015-02-20.
  */
-public class CSVData {
+public class CSVData implements Serializable{
 
     private Context context;
     private String stringCSV = null;

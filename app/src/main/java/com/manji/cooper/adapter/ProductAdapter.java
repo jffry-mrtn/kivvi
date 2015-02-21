@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 
 public class ProductAdapter extends BaseAdapter implements Filterable {
@@ -70,7 +71,7 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
                     searchResults.values = data;
                     searchResults.count = data.size();
                 } else {
-                    HashMap<String, DataManager.ItemInfo> filteredResults = DataManager.getInstance().getFilteredData(constraint.toString());
+                    HashMap<String, ItemInfo> filteredResults = DataManager.getInstance().getFilteredData(constraint.toString());
 
                     for (String f: filteredResults.keySet()){
                         int csvKey = filteredResults.get(f).csvKey;

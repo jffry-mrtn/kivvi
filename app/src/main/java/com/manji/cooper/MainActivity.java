@@ -20,12 +20,15 @@ import android.widget.RelativeLayout;
 
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.custom.Data;
+import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.fragments.MainFragment;
 import com.manji.cooper.fragments.NutritionFragment;
 import com.manji.cooper.fragments.ProductFragment;
 import com.manji.cooper.fragments.ScannerFragment;
 import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
+import com.manji.cooper.utils.LocalStorage;
 import com.manji.cooper.utils.Utility;
 
 import java.util.HashMap;
@@ -52,8 +55,10 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private SearchView searchView;
 
     private DataManager dataManager;
+
     private HashMap<Integer, CSVData> data;
-    private HashMap<String, DataManager.ItemInfo> items;
+    private HashMap<String, ItemInfo> items;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
         dataManager = DataManager.getInstance();
         dataManager.setOnDataRetrievedListener(this);
+
         dataManager.fetchData();
 
         super.onCreate(savedInstanceState);
@@ -227,6 +233,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     public void onDataRetrieved() {
         Log.d(TAG, "Data retrieved");
         this.data = DataManager.getInstance().getData();
-        this.items = DataManager.getInstance().getFilteredData("");
+        this.items = DataManager.getInstance().getItems();
     }
 }

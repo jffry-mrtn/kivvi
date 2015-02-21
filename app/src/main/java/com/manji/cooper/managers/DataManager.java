@@ -5,25 +5,25 @@ import android.util.Log;
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.CSVParser;
+import com.manji.cooper.custom.Data;
+import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.custom.Resource;
 import com.manji.cooper.listeners.OnDataRetrievedListener;
+import com.manji.cooper.utils.LocalStorage;
 import com.manji.cooper.utils.Utility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * Created by douglaspereira on 2015-02-20.
  */
-public class DataManager {
+public class DataManager{
 
     private final String TAG = DataManager.class.getSimpleName();
 
     private static DataManager instance;
 
-    private HashMap<Integer, CSVData> data;
-    private HashMap<String, ItemInfo> items;
+    private Data data;
 
     private CSVParser csvParser;
 
@@ -33,15 +33,8 @@ public class DataManager {
 
     private OnDataRetrievedListener onDataRetrievedListener;
 
-    public class ItemInfo {
-        public int csvKey;
-        public ArrayList<String> values;
+    private LocalStorage storage;
 
-        ItemInfo (int k, ArrayList<String> a){
-            csvKey = k;
-            values = a;
-        }
-    }
 
     private Resource.OnRetrievedListener csvRetrievedListn = new Resource.OnRetrievedListener() {
         @Override
@@ -52,16 +45,20 @@ public class DataManager {
 
             int csvKey = csvData.hashCode();
 
-            data.put(csvKey, csvData);
+            data.csvData.put(csvKey, csvData);
 
             for (String k: csvData.getKeys()){
-                items.put(k, new ItemInfo(csvKey, csvData.getEntry(k)));
+                data.csvItems.put(k, new ItemInfo(csvKey, csvData.getEntry(k)));
             }
 
             dataRetrieved++;
 
             if (isDone()){
-                Log.d(TAG, "Retrieved all CSV resources: " + data.size());
+                Log.d(TAG, "Retrieved all CSV resources: " + data.csvData.size());
+
+                //Store everything locally
+                storage.storeData(LocalStorage.DATA_SETS_TAG, data.csvData);
+                storage.storeItems(LocalStorage.ALL_ITEMS_TAG, data.csvItems);
 
                 onDataRetrievedListener.onDataRetrieved();
                 //Callback or notify that all set have been retrieved
@@ -84,8 +81,9 @@ public class DataManager {
 
     private DataManager(){
         csvParser = new CSVParser();
-        data = new HashMap<>();
-        items = new HashMap<>();
+        data = new Data();
+
+        storage = new LocalStorage(LocalStorage.STORAGE_KEY);
 
         resources = new String[] {
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_eggs),
@@ -113,24 +111,35 @@ public class DataManager {
     }
 
     public void fetchData(){
-        ResourceHandler rh = ResourceHandler.getInstance();
+        data.csvData = Utility.getDataFromStorage(storage);
+        data.csvItems = Utility.getItemsFromStorage(storage);
 
-        Log.d(TAG, "Fetching CSV resources");
+//        if (data == null || items == null){
+            data.csvData = new HashMap<>();
+            data.csvItems = new HashMap<>();
 
-        for (String s: resources){
-            rh.getResource(s, csvRetrievedListn);
-        }
+            ResourceHandler rh = ResourceHandler.getInstance();
+
+            Log.d(TAG, "Fetching CSV resources");
+
+            for (String s: resources){
+                rh.getResource(s, csvRetrievedListn);
+            }
+//        }
+//        else{
+//            onDataRetrievedListener.onDataRetrieved();
+//        }
     }
 
     public HashMap<String, ItemInfo> getFilteredData(String filter){
         if (filter.trim().isEmpty())
-            return items;
+            return data.csvItems;
         else{
             HashMap<String, ItemInfo> filteredResults = new HashMap<>();
 
-            for (String i: items.keySet()){
+            for (String i: data.csvItems.keySet()){
                 if (i.contains(filter)){
-                    filteredResults.put(i, items.get(i));
+                    filteredResults.put(i, data.csvItems.get(i));
                 }
             }
 
@@ -139,11 +148,11 @@ public class DataManager {
     }
 
     public HashMap<String, ItemInfo> getItems(){
-       return items;
+       return data.csvItems;
     }
 
     public HashMap<Integer, CSVData> getData() {
-        return data;
+        return data.csvData;
     }
 
     private boolean isDone(){
