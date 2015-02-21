@@ -87,29 +87,29 @@ public class CSVData {
         return keys;
     }
 
-    @Override
-    public String toString() {
-        if (data == null || context == null) return null;
-
-        if (stringCSV == null){
-            stringCSV = "";
-            String n = null, u = null;
-
-            for (String k : data.keySet()){
-                if (k == context.getResources().getString(R.string.csv_attributes_names)){
-                    n = k;
-                }else if (k == context.getResources().getString(R.string.csv_attributes_units)){
-                    u = k;
-                }else{
-                    stringCSV = stringCSV + data.get(k) + "\n";
-                }
-            }
-
-            stringCSV = u + "\n" + stringCSV;
-            stringCSV = n + "\n" + stringCSV;
-
-        }
-
-        return stringCSV;
-    }
+//    @Override
+//    public String toString() {
+//        if (data == null || context == null) return null;
+//
+//        if (stringCSV == null){
+//            stringCSV = "";
+//            String n = null, u = null;
+//
+//            for (String k : data.keySet()){
+//                if (k == context.getResources().getString(R.string.csv_attributes_names)){
+//                    n = k;
+//                }else if (k == context.getResources().getString(R.string.csv_attributes_units)){
+//                    u = k;
+//                }else{
+//                    stringCSV = stringCSV + data.get(k) + "\n";
+//                }
+//            }
+//
+//            stringCSV = u + "\n" + stringCSV;
+//            stringCSV = n + "\n" + stringCSV;
+//
+//        }
+//
+//        return stringCSV;
+//    }
 }

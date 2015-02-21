@@ -10,6 +10,7 @@ import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -21,9 +22,10 @@ public class DataManager {
 
     private static DataManager instance;
 
-    private ArrayList<CSVData> data;
+    private HashMap<Integer, CSVData> data;
+    private HashMap<String, ItemInfo> items;
+
     private CSVParser csvParser;
-    private ArrayList<String> itemNames;
 
     private String[] resources;
 
@@ -31,22 +33,37 @@ public class DataManager {
 
     private OnDataRetrievedListener onDataRetrievedListener;
 
+    public class ItemInfo {
+        public int csvKey;
+        public ArrayList<String> values;
+
+        ItemInfo (int k, ArrayList<String> a){
+            csvKey = k;
+            values = a;
+        }
+    }
+
     private Resource.OnRetrievedListener csvRetrievedListn = new Resource.OnRetrievedListener() {
         @Override
         public void onRetrieved(Resource resource) {
             CSVData csvData = csvParser.parseCSV(resource.getContent());
 
-            Log.d(TAG, "Parsed csv: " + csvData.getClass());
+            Log.d(TAG, "Parsed csv: " + csvData);
 
-            data.add(csvData);
-            itemNames.addAll(csvData.getKeys());
+            int csvKey = csvData.hashCode();
+
+            data.put(csvKey, csvData);
+
+            for (String k: csvData.getKeys()){
+                items.put(k, new ItemInfo(csvKey, csvData.getEntry(k)));
+            }
 
             dataRetrieved++;
 
             if (isDone()){
                 Log.d(TAG, "Retrieved all CSV resources: " + data.size());
 
-                onDataRetrievedListener.onDataRetrieved(data, itemNames);
+                onDataRetrievedListener.onDataRetrieved();
                 //Callback or notify that all set have been retrieved
             }
         }
@@ -67,8 +84,8 @@ public class DataManager {
 
     private DataManager(){
         csvParser = new CSVParser();
-        data = new ArrayList<>();
-        itemNames = new ArrayList<>();
+        data = new HashMap<>();
+        items = new HashMap<>();
 
         resources = new String[] {
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_eggs),
@@ -95,7 +112,7 @@ public class DataManager {
         onDataRetrievedListener = listn;
     }
 
-    public void getData(){
+    public void fetchData(){
         ResourceHandler rh = ResourceHandler.getInstance();
 
         Log.d(TAG, "Fetching CSV resources");
@@ -103,6 +120,30 @@ public class DataManager {
         for (String s: resources){
             rh.getResource(s, csvRetrievedListn);
         }
+    }
+
+    public HashMap<String, ItemInfo> getFilteredData(String filter){
+        if (filter.trim().isEmpty())
+            return items;
+        else{
+            HashMap<String, ItemInfo> filteredResults = new HashMap<>();
+
+            for (String i: items.keySet()){
+                if (i.contains(filter)){
+                    filteredResults.put(i, items.get(i));
+                }
+            }
+
+            return filteredResults;
+        }
+    }
+
+    public HashMap<String, ItemInfo> getItems(){
+       return items;
+    }
+
+    public HashMap<Integer, CSVData> getData() {
+        return data;
     }
 
     private boolean isDone(){

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class ProductFragment extends Fragment {
 
     private ArrayList<CSVData> data;
+    private ArrayList<String> itemNames;
     private Context context;
     private View layoutView;
 
@@ -45,7 +46,7 @@ public class ProductFragment extends Fragment {
         getNutritionButton = (Button) layoutView.findViewById(R.id.get_nutrition_button);
         cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
 
-        productAdapter = new ProductAdapter(context, data);
+        productAdapter = new ProductAdapter(context);
         productListView.setAdapter(productAdapter);
 
         // Text Watcher for the Filterable
@@ -84,11 +85,12 @@ public class ProductFragment extends Fragment {
         ((MainActivity) getActivity()).showNutritionFragment();
     }
 
-    public void setData(ArrayList<CSVData> csvData) {
+    public void setData(ArrayList<CSVData> csvData, ArrayList<String> names) {
         this.data = csvData;
+        this.itemNames = names;
 
         if (productListView != null) {
-            productAdapter = new ProductAdapter(context, data);
+            productAdapter = new ProductAdapter(context);
             productListView.setAdapter(productAdapter);
             productAdapter.notifyDataSetChanged();
         }
@@ -104,7 +106,7 @@ public class ProductFragment extends Fragment {
     public void clearSearchFilter() {
         productAdapter.getFilter().filter("");
 
-        productAdapter = new ProductAdapter(context, data);
+        productAdapter = new ProductAdapter(context);
         productListView.setAdapter(productAdapter);
         productAdapter.notifyDataSetChanged();
     }

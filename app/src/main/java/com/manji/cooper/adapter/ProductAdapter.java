@@ -1,32 +1,31 @@
 package com.manji.cooper.adapter;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.managers.DataManager;
 
 public class ProductAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
-    private ArrayList<CSVData> data;
-    private ArrayList<CSVData> filteredData;
+    private HashMap<Integer, CSVData> data;
+    private ArrayList<String> filteredData;
 
-    public ProductAdapter(Context context, ArrayList<CSVData> content) {
+    public ProductAdapter(Context context) {
         this.context = context;
-        this.data = content;
-        this.filteredData = data;
+        this.data = DataManager.getInstance().getData();
+        this.filteredData = new ArrayList<String>();
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public CSVData getItem(int i) {
+    public String getItem(int i) {
         return filteredData.get(i);
     }
 
@@ -71,23 +70,32 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
                     searchResults.values = data;
                     searchResults.count = data.size();
                 } else {
-                    ArrayList<CSVData> searchResultsData = new ArrayList<CSVData>();
+                    HashMap<String, DataManager.ItemInfo> filteredResults = DataManager.getInstance().getFilteredData(constraint.toString());
 
-                    for (CSVData item : data) {
-                        if (item.toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                            searchResultsData.add(item);
-                        }
+                    for (String f: filteredResults.keySet()){
+                        int csvKey = filteredResults.get(f).csvKey;
+                        ArrayList<String> values = filteredResults.get(f).values;
+
+                        CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
                     }
-
-                    searchResults.values = searchResultsData;
-                    searchResults.count = searchResultsData.size();
+//                    for (String item : itemNames) {
+//                       if (item.toLowerCase().contains(constraint.toString().toLowerCase())) {
+//                               String found = item + ": " + data..getEntry(k);
+//                               searchResultsData.add(found);
+//
+//                       }
+//
+//                    }
+//
+//                    searchResults.values = searchResultsData;
+//                    searchResults.count = searchResultsData.size();
                 }
                 return searchResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredData = (ArrayList<CSVData>) results.values;
+                //filteredData = (ArrayList<String>) results.values;
                 notifyDataSetChanged();
             }
         };

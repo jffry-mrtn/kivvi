@@ -28,7 +28,7 @@ import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.utils.Utility;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity implements OnDataRetrievedListener {
@@ -52,7 +52,8 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private SearchView searchView;
 
     private DataManager dataManager;
-    private ArrayList<CSVData> data;
+    private HashMap<Integer, CSVData> data;
+    private HashMap<String, DataManager.ItemInfo> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
         dataManager = DataManager.getInstance();
         dataManager.setOnDataRetrievedListener(this);
-        dataManager.getData();
+        dataManager.fetchData();
 
         super.onCreate(savedInstanceState);
     }
@@ -197,8 +198,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     }
 
     public void showProductFragment() {
-        productFragment.setData(data);
-
         getFragmentManager().beginTransaction()
                 .add(R.id.frame, productFragment)
                 .addToBackStack(null)
@@ -225,9 +224,9 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     }
 
     @Override
-    public void onDataRetrieved(ArrayList<CSVData> data, ArrayList<String> itemNames) {
+    public void onDataRetrieved() {
         Log.d(TAG, "Data retrieved");
-        this.data = data;
-        productFragment.setData(this.data);
+        this.data = DataManager.getInstance().getData();
+        this.items = DataManager.getInstance().getFilteredData("");
     }
 }
