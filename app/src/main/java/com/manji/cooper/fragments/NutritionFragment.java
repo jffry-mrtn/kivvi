@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,12 @@ public class NutritionFragment extends Fragment {
 
     private SeekBar quantitySeekbar;
     private TextView quantityLabel;
+    private TextView foodTitleTextView;
+    private TextView foodCaloriesTextView;
+
+    private String mealTitle;
+    private ArrayList<String> nutritionalValues;
+    private CSVData dataSet;
 
     public NutritionFragment() {
         super();
@@ -39,8 +46,12 @@ public class NutritionFragment extends Fragment {
         layoutView = inflater.inflate(R.layout.fragment_nutrition, container, false);
         context = getActivity().getApplicationContext();
 
+        foodTitleTextView = (TextView) layoutView.findViewById(R.id.food_title);
+        foodCaloriesTextView = (TextView) layoutView.findViewById(R.id.food_calories);
+
         quantityLabel = (TextView) layoutView.findViewById(R.id.quantity_label);
         quantitySeekbar = (SeekBar) layoutView.findViewById(R.id.quantity_seekbar);
+        
         quantitySeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -58,6 +69,19 @@ public class NutritionFragment extends Fragment {
             }
         });
 
+        initData();
+        
         return layoutView;
+    }
+
+    private void initData() {
+        foodTitleTextView.setText(mealTitle.substring(0, 1).toUpperCase() + mealTitle.substring(1));
+        foodCaloriesTextView.setText("281");
+    }
+
+    public void setData(String meal, ArrayList<String> values, CSVData dataSet) {
+        this.mealTitle = meal;
+        this.nutritionalValues = values;
+        this.dataSet = dataSet;
     }
 }
