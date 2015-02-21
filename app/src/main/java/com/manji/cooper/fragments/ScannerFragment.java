@@ -188,10 +188,13 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
                             productFragment.setFilteredResults(r);
                         }
 
-                        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, productFragment, Constants.SCANNER_FRAGMENT_TAG);
-                        fragmentTransaction.addToBackStack(Constants.SCANNER_FRAGMENT_TAG);
-                        fragmentTransaction.commit();
+                        if (isAdded()){
+                            final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.frame, productFragment, Constants.SCANNER_FRAGMENT_TAG);
+                            fragmentTransaction.addToBackStack(Constants.SCANNER_FRAGMENT_TAG);
+                            fragmentTransaction.commit();
+                        }
+
 
                     }
                 }, 3000);
