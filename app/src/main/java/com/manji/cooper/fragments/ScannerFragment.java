@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.manji.cooper.R;
+import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.custom.Resource;
+import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.managers.ResourceHandler;
 import com.manji.cooper.model.Constants;
 import com.manji.cooper.utils.Utility;
@@ -20,7 +23,11 @@ import org.json.JSONObject;
 import android.os.Handler;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
@@ -98,6 +105,47 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
         mScannerView.startCamera();
     }
 
+    /* Generate list of 1-2 word queries based on item name
+     *
+     */
+    private ArrayList<String> generateQueries(String itemName) {
+        List<String> words = Arrays.asList(itemName.split("\\s+"));
+        ArrayList<String> queries = new ArrayList<>();
+
+        for (int queryLength = 1; queryLength <= 2; queryLength++){
+            for (int w=0; w < words.size(); w++){
+
+                if (w + queryLength > words.size())
+                    break;
+
+                String q = TextUtils.join(" ", words.subList(w, w + queryLength));
+                queries.add(q);
+            }
+        }
+
+        return queries;
+    }
+
+    /* Filter data set results based on generated queries
+     *
+     */
+    private HashMap<String, ItemInfo> getFilteredResults(String itemName){
+
+        ArrayList<String> queries = generateQueries(itemName);
+        HashMap<String, ItemInfo> filteredResults = new HashMap<>();
+
+        for (String q: queries){
+            HashMap<String, ItemInfo> r = DataManager.getInstance().getFilteredData(q);
+
+            for (String s: r.keySet()){
+                filteredResults.put(s, r.get(s));
+            }
+        }
+
+       return filteredResults;
+
+    }
+
     private Resource.OnRetrievedListener outpanJsonRetrievedListener = new Resource.OnRetrievedListener() {
         @Override
         public void onRetrieved(Resource resource) {
@@ -105,28 +153,55 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
 
             try{
                 JSONObject jsonObject = new JSONObject(resource.getContent());
-                String name = jsonObject.getString("name");
-                String code = jsonObject.getString("barcode");
+                String name = null;
+                String code = null;
+                String error = null;
 
-                if (name.trim().isEmpty())
+                if (jsonObject.has("name"))
+                    name = jsonObject.getString("name");
+
+                if (jsonObject.has("barcode"))
+                    code = jsonObject.getString("barcode");
+
+                if (jsonObject.has("error"))
+                    error = jsonObject.getString("error");
+
+                final boolean itemMatch = (name != null && error == null);
+
+                if (itemMatch)
                     itemDetailText.setText("Couldn't recognize barcode");
                 else
                     itemDetailText.setText(name + " | " + code);
+
+                final String itemName = name;
 
                 //TEMP... Leave fragment after a few seconds
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        stopScanner();
+
+                        ProductFragment productFragment = new ProductFragment();
+
+                        if (itemMatch){
+                            HashMap<String, ItemInfo> r =
+                                    getFilteredResults("Omelet, spanish eggs onions");
+                            ;
+                            productFragment.setFilteredResults(r);
+                        }
+
                         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, new ProductFragment(), Constants.SCANNER_FRAGMENT_TAG);
+                        fragmentTransaction.replace(R.id.frame, productFragment, Constants.SCANNER_FRAGMENT_TAG);
                         fragmentTransaction.addToBackStack(Constants.SCANNER_FRAGMENT_TAG);
                         fragmentTransaction.commit();
+
                     }
                 }, 3000);
 
 
             }catch (Exception ex){
                 Log.e(TAG, ex.toString());
+                itemDetailText.setText("Couldn't recognize barcode");
             }
         }
 
