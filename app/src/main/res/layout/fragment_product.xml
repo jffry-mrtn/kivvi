@@ -36,13 +36,13 @@
             android:background="@color/light_primary">
 
             <Button
-                android:id="@+id/save_product_button"
+                android:id="@+id/get_nutrition_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/save_product"
+                android:text="@string/get_nutrition"
                 android:textColor="@android:color/white"
-                android:background="@drawable/save_button" />
+                android:background="@drawable/primary_button" />
 
             <Button
                 android:id="@+id/cancel_button"

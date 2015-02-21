@@ -5,11 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,7 +16,6 @@ import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.adapter.ProductAdapter;
 import com.manji.cooper.custom.CSVData;
-import com.manji.cooper.model.Constants;
 
 import java.util.ArrayList;
 
@@ -29,9 +24,8 @@ public class ProductFragment extends Fragment {
     private ArrayList<CSVData> data;
     private Context context;
     private View layoutView;
-    private ActionMode actionMode;
 
-    private Button saveProductButton;
+    private Button getNutritionButton;
     private Button cancelButton;
     private ListView productListView;
     private EditText enterProductEditText;
@@ -48,7 +42,7 @@ public class ProductFragment extends Fragment {
 
         enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
         productListView = (ListView) layoutView.findViewById(R.id.product_listview);
-        saveProductButton = (Button) layoutView.findViewById(R.id.save_product_button);
+        getNutritionButton = (Button) layoutView.findViewById(R.id.get_nutrition_button);
         cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
 
         productAdapter = new ProductAdapter(context, data);
@@ -70,9 +64,10 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        saveProductButton.setOnClickListener(new View.OnClickListener() {
+        getNutritionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showNutritionFragment();
             }
         });
 
@@ -83,6 +78,10 @@ public class ProductFragment extends Fragment {
             }
         });
         return layoutView;
+    }
+
+    private void showNutritionFragment() {
+        ((MainActivity) getActivity()).showNutritionFragment();
     }
 
     public void setData(ArrayList<CSVData> csvData) {

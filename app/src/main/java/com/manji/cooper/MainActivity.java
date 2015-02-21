@@ -1,14 +1,10 @@
 package com.manji.cooper;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,11 +21,11 @@ import android.widget.RelativeLayout;
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.fragments.MainFragment;
+import com.manji.cooper.fragments.NutritionFragment;
 import com.manji.cooper.fragments.ProductFragment;
 import com.manji.cooper.fragments.ScannerFragment;
 import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
-import com.manji.cooper.model.Constants;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
@@ -43,6 +39,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private MainFragment mainFragment;
     private ScannerFragment scannerFragment;
     private ProductFragment productFragment;
+    private NutritionFragment nutritionFragment;
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
@@ -89,7 +86,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
             public void onDrawerClosed(View v) {
                 if (mainFragment.isVisible()) {
-                    setToolbarTitle("");
+                    setToolbarTitle(getString(R.string.app_name));
                 }
 
                 invalidateOptionsMenu();
@@ -107,6 +104,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         mainFragment = new MainFragment();
         scannerFragment = new ScannerFragment();
         productFragment = new ProductFragment();
+        nutritionFragment = new NutritionFragment();
 
         // Load initial fragment
         FragmentManager fm = getFragmentManager();
@@ -114,7 +112,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
                 .replace(R.id.frame, mainFragment)
                 .commit();
 
-        setToolbarTitle("");
+        setToolbarTitle(getString(R.string.app_name));
 
         dataManager = DataManager.getInstance();
         dataManager.setOnDataRetrievedListener(this);
@@ -182,6 +180,13 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
      */
     private void setToolbarTitle(String title) {
         toolbar.setTitle(title);
+    }
+
+    public void showNutritionFragment() {
+        getFragmentManager().beginTransaction()
+                .add(R.id.frame, nutritionFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void showScannerFragment() {
