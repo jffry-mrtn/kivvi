@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,8 +24,7 @@ public class MainFragment extends Fragment {
     private ActionMode actionMode;
 
     private ListView historyListView;
-    private Button barcodeButton;
-    private Button enterProductButton;
+    private EditText enterProductEditText;
     private TextView caloriesTextView;
 
 
@@ -38,21 +38,10 @@ public class MainFragment extends Fragment {
         context = getActivity().getApplicationContext();
 
         caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
-        barcodeButton = (Button) layoutView.findViewById(R.id.barcode_button);
-        enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
+        enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
         historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
         
-        enterProductButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEnterProduct();
-            }
-        });
-        
         return layoutView;
-    }
-
-    private void showEnterProduct() {
     }
 
     @Override

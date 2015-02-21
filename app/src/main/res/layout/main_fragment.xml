@@ -59,46 +59,22 @@
                 android:textAllCaps="true" />
         </LinearLayout>
 
-        <!-- Button Bar -->
-        <LinearLayout
-            android:id="@+id/action_button_bar"
+        <EditText
+            android:id="@+id/enter_product_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/barcode_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableLeft="@null"
-                android:layout_weight="0.5"
-                android:layout_marginRight="1dp"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/scan_barcode"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:background="@drawable/action_button"/>
-
-            <Button
-                android:id="@+id/enter_product_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableLeft="@null"
-                android:layout_weight="0.5"
-                android:layout_marginLeft="1dp"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/enter_product"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:background="@drawable/action_button"/>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:drawableRight="@drawable/ic_camera"
+            android:hint="@string/enter_product"
+            android:textColor="@color/dark_grey"
+            android:background="@drawable/enter_field" />
 
         <!-- History -->
         <LinearLayout
             android:id="@+id/history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
