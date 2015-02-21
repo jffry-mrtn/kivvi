@@ -53,7 +53,7 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
         View row = inflater.inflate(R.layout.product_item, viewGroup, false);
 
         TextView productTitle = (TextView) row.findViewById(R.id.product_title);
-        productTitle.setText(getItem(i).toString());
+        productTitle.setText(getItem(i));
 
         return row;
     }

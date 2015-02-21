@@ -112,6 +112,7 @@ public class ProductFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             productAdapter.getItem(position);
 
+            ((MainActivity) getActivity()).showNutritionFragment();
         }
     }
 }
