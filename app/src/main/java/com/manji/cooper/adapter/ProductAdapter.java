@@ -50,11 +50,11 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View row = inflater.inflate(R.layout.product_item, viewGroup, false);
-        TextView productTitle = (TextView) row.findViewById(R.id.product_title);
 
+        TextView productTitle = (TextView) row.findViewById(R.id.product_title);
         productTitle.setText(getItem(i).toString());
+
         return row;
     }
 
@@ -70,32 +70,28 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
                     searchResults.values = data;
                     searchResults.count = data.size();
                 } else {
-                    HashMap<String, DataManager.ItemInfo> filteredResults = DataManager.getInstance().getFilteredData(constraint.toString());
+                    HashMap<String, DataManager.ItemInfo> filteredHashMap = DataManager.getInstance().getFilteredData(constraint.toString());
 
-                    for (String f: filteredResults.keySet()){
-                        int csvKey = filteredResults.get(f).csvKey;
-                        ArrayList<String> values = filteredResults.get(f).values;
+                    ArrayList<String> filteredResults = new ArrayList<String>();
+                    filteredResults.addAll(filteredHashMap.keySet());
 
+                    // Dont need this below vvvvv
+                    for (String f: filteredResults){
+                        int csvKey = filteredHashMap.get(f).csvKey;
+                        ArrayList<String> values = filteredHashMap.get(f).values;
                         CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
                     }
-//                    for (String item : itemNames) {
-//                       if (item.toLowerCase().contains(constraint.toString().toLowerCase())) {
-//                               String found = item + ": " + data..getEntry(k);
-//                               searchResultsData.add(found);
-//
-//                       }
-//
-//                    }
-//
-//                    searchResults.values = searchResultsData;
-//                    searchResults.count = searchResultsData.size();
+
+                    searchResults.values = filteredResults;
+                    searchResults.count = filteredResults.size();
                 }
+
                 return searchResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                //filteredData = (ArrayList<String>) results.values;
+                filteredData = (ArrayList<String>) results.values;
                 notifyDataSetChanged();
             }
         };
