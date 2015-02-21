@@ -17,6 +17,19 @@
     <string name="nutrient_value_2008_baked_goods">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/baked-goods_boulangerie/nutrient_value_baked_2008_valeur_nutritive_boulangerie-eng.csv</string>
     <string name="nutrient_value_2008_beverages">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/beverages_boissons/nutrient_value_beverages_2008_valeur_nutritive_boissons-eng.csv</string>
     <string name="nutrient_value_2008_grains">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/breads-pains/nutrient_value_breads_cereals_and_other_grain_products_2008_valeur_nutritive_pains_cereales_et_autres_produits_cerealiers-eng.csv</string>
+    <string name="nutrient_value_2008_dairy">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/dairy-foods_produits-laitiers/nutrient_value_dairy_foods_and_other_related_products_2008_valeur_nutritive_produits_laitiers_et_produits_annexes-eng.csv</string>
+    <string name="nutrient_value_2008_fastfood">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/fast-foods_restaurant-minute/nutrient_value_fast_foods_2008_valeur_nutritive_restaurant_minute-eng.csv</string>
+    <string name="nutrient_value_2008_fats">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/fats-oils_matieres-huiles/nutrient_value_fats_and_oils_foods_2008_valeur_nutritive_matieres_grasses_et_huiles-eng.csv</string>
+    <string name="nutrient_value_2008_fish">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/fish_poissons/nutrient_value_fish_and_shellfish_2008_valeur_nutritive_poissons_et_crustaces-eng.csv</string>
+    <string name="nutrient_value_2008_fruits">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/fruit-fruits/nutrient_value_fruits_and_fruit_juices_2008_valeur_nutritive_fruits_et_jus_de_fruits-eng.csv</string>
+    <string name="nutrient_value_2008_nuts_legumes">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/legumes-nuts_legumineuses-noix/nutrient_value_legumes_nuts_and_seeds_2008_valeur_nutritive_legumineuses_noix_et_graines-eng.csv</string>
+    <string name="nutrient_value_2008_meats">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/meat_viande/nutrient_value_meat_and_poultry_2008_valeur_nutritive_2008_viande_et_volaille-eng.csv</string>
+    <string name="nutrient_value_2008_misc">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/miscellaneous_divers/nutrient_value_miscellaneous_foods_2008_valeur_nutritive_divers-eng.csv</string>
+    <string name="nutrient_value_2008_mixed_dishes">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/mixed-dishes_mets-composes/nutrient_value_mixed_dishes_2008_valeur_nutritive_mets_composes-eng.csv</string>
+    <string name="nutrient_value_2008_snacks">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/snacks_grignotises/nutrient_value_snacks_2008_valeur_nutritive_grignotises-eng.csv</string>
+    <string name="nutrient_value_2008_vegetables">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/vegetables-legumes/nutrient_value_vegetables_and_vegetable_products_2008_valeur_nutritive_legumes_et_produits_base_de_legumes-eng.csv</string>
+    <string name="nutrient_value_2008_sugars">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/sugars-sucres/nutrient_value_some_common_foods_sweets_sugars-2008-valeur_nutritive_quelques_aliments_usuels_sucres_sucreries-eng.csv</string>
+    <string name="nutrient_value_2008_soups">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/soups-soupes/nutrient_value_some_common_foods_soups-2008-valeur_nutritive_quelques_aliments_usuels_soupe-eng.csv</string>
 
 
     <string name="csv_attributes_names">_attribute_names_</string>

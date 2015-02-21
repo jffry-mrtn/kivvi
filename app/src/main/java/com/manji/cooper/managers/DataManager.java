@@ -68,7 +68,20 @@ public class DataManager {
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_baked_goods),
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_beverages),
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_grains),
-            };
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_dairy),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_fastfood),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_fats),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_fish),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_fruits),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_meats),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_mixed_dishes),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_misc),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_nuts_legumes),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_soups),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_snacks),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_sugars),
+            Utility.activity.getResources().getString(R.string.nutrient_value_2008_vegetables),
+        };
 
         initDataSets();
 
