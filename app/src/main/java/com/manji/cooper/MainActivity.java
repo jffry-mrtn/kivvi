@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,13 +21,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.manji.cooper.adapter.DrawerAdapter;
+import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.fragments.MainFragment;
 import com.manji.cooper.fragments.ScannerFragment;
+import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.utils.Utility;
 
+import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends ActionBarActivity implements OnDataRetrievedListener {
+
+    private final String TAG = MainActivity.class.getSimpleName();
 
     private String[] drawerArrayList;
     private MainFragment mainFragment;
@@ -103,6 +110,8 @@ public class MainActivity extends ActionBarActivity {
         setToolbarTitle("");
 
         dataManager = DataManager.getInstance();
+        dataManager.setOnDataRetrievedListener(this);
+        dataManager.getData();
 
         super.onCreate(savedInstanceState);
     }
@@ -225,5 +234,10 @@ public class MainActivity extends ActionBarActivity {
             // Close the drawer
             drawerLayout.closeDrawer(drawerView);
         }
+    }
+
+    @Override
+    public void onDataRetrieved(ArrayList<CSVData> data) {
+        Log.d(TAG, "Data retrieved");
     }
 }

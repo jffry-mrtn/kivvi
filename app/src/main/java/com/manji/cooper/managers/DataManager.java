@@ -6,6 +6,7 @@ import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.CSVParser;
 import com.manji.cooper.custom.Resource;
+import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class DataManager {
 
     private int dataRetrieved = 0;
 
+    private OnDataRetrievedListener onDataRetrievedListener;
+
     private Resource.OnRetrievedListener csvRetrievedListn = new Resource.OnRetrievedListener() {
         @Override
         public void onRetrieved(Resource resource) {
@@ -41,6 +44,7 @@ public class DataManager {
             if (isDone()){
                 Log.d(TAG, "Retrieved all CSV resources: " + data.size());
 
+                onDataRetrievedListener.onDataRetrieved(data);
                 //Callback or notify that all set have been retrieved
             }
         }
@@ -82,12 +86,13 @@ public class DataManager {
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_sugars),
             Utility.activity.getResources().getString(R.string.nutrient_value_2008_vegetables),
         };
-
-        initDataSets();
-
     }
 
-    private void initDataSets(){
+    public void setOnDataRetrievedListener(OnDataRetrievedListener listn){
+        onDataRetrievedListener = listn;
+    }
+
+    public void getData(){
         ResourceHandler rh = ResourceHandler.getInstance();
 
         Log.d(TAG, "Fetching CSV resources");
@@ -100,4 +105,5 @@ public class DataManager {
     private boolean isDone(){
         return dataRetrieved == resources.length;
     }
+
 }
