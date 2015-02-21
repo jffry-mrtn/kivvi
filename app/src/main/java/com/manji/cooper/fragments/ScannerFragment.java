@@ -1,6 +1,7 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.manji.cooper.R;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
@@ -38,14 +40,11 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
-
         init();
-
         return mScannerView;
     }
 
     protected void init () {
-
         mScannerView = new ZBarScannerView(Utility.activity);
 
     }
@@ -84,9 +83,12 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
 
     @Override
     public void handleResult(Result rawResult) {
-        //TODO; direct user awys from scanner fragment , probably to item screen
-
         Log.d ("Scanner", "Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, new ProductFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 }
