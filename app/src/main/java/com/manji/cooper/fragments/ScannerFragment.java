@@ -194,8 +194,6 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
                             fragmentTransaction.addToBackStack(Constants.SCANNER_FRAGMENT_TAG);
                             fragmentTransaction.commit();
                         }
-
-
                     }
                 }, 3000);
 

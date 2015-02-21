@@ -11,7 +11,9 @@ import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by douglaspereira on 2015-02-20.
@@ -86,6 +88,23 @@ public class Utility {
         }
 
         return data;
+    }
+
+    public static ArrayList<String> getUnitAppendedValues(ItemInfo item){
+        List<String> units = DataManager.getInstance().getData().get(item.csvKey).getAttributeUnits();
+        ArrayList<String> appendedValues = null;
+
+        if (units.size() == item.values.size()){
+            appendedValues = new ArrayList<>();
+
+            for (int i=0; i<item.values.size()-1; i++){
+                appendedValues.add(item.values.get(i) + units.get(i));
+            }
+        }
+
+        Log.d(TAG, appendedValues.toString());
+
+        return appendedValues;
     }
 
 
