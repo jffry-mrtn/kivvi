@@ -19,9 +19,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.manji.cooper.adapter.DrawerAdapter;
+import com.manji.cooper.fragments.MainFragment;
+import com.manji.cooper.managers.DataManager;
+import com.manji.cooper.utils.Utility;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -39,9 +40,13 @@ public class MainActivity extends ActionBarActivity {
     private View frameLayout;
     private SearchView searchView;
 
+    private DataManager dataManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+
+        Utility.activity = this;
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -93,6 +98,8 @@ public class MainActivity extends ActionBarActivity {
                 .commit();
 
         setToolbarTitle("");
+
+        dataManager = DataManager.getInstance();
 
         super.onCreate(savedInstanceState);
     }

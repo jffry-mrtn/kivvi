@@ -1,4 +1,4 @@
-package com.manji.cooper;
+package com.manji.cooper.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.manji.cooper.R;
 
 public class MainFragment extends Fragment {
 
