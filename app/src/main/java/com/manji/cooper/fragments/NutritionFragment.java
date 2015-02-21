@@ -80,6 +80,14 @@ public class NutritionFragment extends Fragment {
     }
 
     private void initData() {
+        generateNutritionViews();
+        foodTitleTextView.setText(mealTitle.substring(0, 1).toUpperCase() + mealTitle.substring(1));
+
+        // Set the calories
+        foodCaloriesTextView.setText("281");
+    }
+
+    private void generateNutritionViews() {
         for (String attrName : dataSet.getAttributeNames()) {
             if (!attrName.equalsIgnoreCase("food name")) {
                 String attrValue = dataSet.getValue(mealTitle, attrName);
@@ -109,11 +117,6 @@ public class NutritionFragment extends Fragment {
                 nutritionLayout.addView(attributeValueTextView);
             }
         }
-
-        foodTitleTextView.setText(mealTitle.substring(0, 1).toUpperCase() + mealTitle.substring(1));
-
-        // Set the calories
-        foodCaloriesTextView.setText("281");
     }
 
     public void setData(String meal, ArrayList<String> values, CSVData dataSet) {
