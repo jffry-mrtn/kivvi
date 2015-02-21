@@ -31,7 +31,6 @@
     <string name="nutrient_value_2008_sugars">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/sugars-sucres/nutrient_value_some_common_foods_sweets_sugars-2008-valeur_nutritive_quelques_aliments_usuels_sucres_sucreries-eng.csv</string>
     <string name="nutrient_value_2008_soups">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/soups-soupes/nutrient_value_some_common_foods_soups-2008-valeur_nutritive_quelques_aliments_usuels_soupe-eng.csv</string>
 
-
     <string name="csv_attributes_names">_attribute_names_</string>
     <string name="csv_attributes_units">_attributes_units_</string>
     <string name="dashboard_title">Today you have eaten</string>
@@ -41,5 +40,8 @@
     <string name="history_label">Recently Scanned Food</string>
     <string name="save_product">Save Product</string>
     <string name="cancel">Cancel</string>
+    
+    <!--Outpan API key-->
+    <string name="outpan_api_key">0651caccf5f32e7858620cf7778e817b</string>
 
 </resources>

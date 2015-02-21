@@ -14,6 +14,7 @@ public class Utility {
     private static final String TAG = Utility.class.getSimpleName();
 
     public static Activity activity;
+    public static final String OUTPAN_REQUEST_URL = "http://www.outpan.com/api/get-product.php?apikey=API_KEY&barcode=BAR_CODE";
 
     /**
      * Return width of screen
