@@ -23,11 +23,10 @@ public class ProductFragment extends Fragment {
 
     private ArrayList<CSVData> data;
     private ArrayList<String> itemNames;
+
     private Context context;
     private View layoutView;
 
-    private Button getNutritionButton;
-    private Button cancelButton;
     private ListView productListView;
     private EditText enterProductEditText;
     private ProductAdapter productAdapter;
@@ -43,8 +42,6 @@ public class ProductFragment extends Fragment {
 
         enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
         productListView = (ListView) layoutView.findViewById(R.id.product_listview);
-        getNutritionButton = (Button) layoutView.findViewById(R.id.get_nutrition_button);
-        cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
 
         productAdapter = new ProductAdapter(context);
         productListView.setAdapter(productAdapter);
@@ -65,24 +62,7 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        getNutritionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNutritionFragment();
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
         return layoutView;
-    }
-
-    private void showNutritionFragment() {
-        ((MainActivity) getActivity()).showNutritionFragment();
     }
 
     public void setData(ArrayList<CSVData> csvData, ArrayList<String> names) {
