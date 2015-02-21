@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.fragments.MainFragment;
+import com.manji.cooper.fragments.ScannerFragment;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.utils.Utility;
 
@@ -29,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
 
     private String[] drawerArrayList;
     private MainFragment mainFragment;
+    private ScannerFragment scannerFragment;
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
@@ -90,6 +92,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Set up the fragments
         mainFragment = new MainFragment();
+        scannerFragment = new ScannerFragment();
 
         // Load initial fragment
         FragmentManager fm = getFragmentManager();
