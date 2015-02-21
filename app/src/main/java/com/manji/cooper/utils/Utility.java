@@ -90,21 +90,22 @@ public class Utility {
         return data;
     }
 
-    public static ArrayList<String> getUnitAppendedValues(ItemInfo item){
-        List<String> units = DataManager.getInstance().getData().get(item.csvKey).getAttributeUnits();
-        ArrayList<String> appendedValues = null;
+    public static ArrayList<String> getFormattedAttributeNames(int csvKey){
+        List<String> units = DataManager.getInstance().getData().get(csvKey).getAttributeUnits();
+        List<String> names = DataManager.getInstance().getData().get(csvKey).getAttributeNames();
+        ArrayList<String> appendedNames = null;
 
-        if (units.size() == item.values.size()){
-            appendedValues = new ArrayList<>();
+        if (units.size() == names.size()){
+            appendedNames = new ArrayList<>();
 
-            for (int i=0; i<item.values.size()-1; i++){
-                appendedValues.add(item.values.get(i) + units.get(i));
+            for (int i=0; i < names.size()-1; i++){
+                appendedNames.add(names.get(i) + " (" + units.get(i) + ")");
             }
         }
 
-        Log.d(TAG, appendedValues.toString());
+        Log.d(TAG, appendedNames.toString());
 
-        return appendedValues;
+        return appendedNames;
     }
 
 
