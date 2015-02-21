@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.manji.cooper.R;
+import com.manji.cooper.model.Constants;
 import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
@@ -86,8 +87,8 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
         Log.d ("Scanner", "Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
 
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, new ProductFragment());
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.frame, new ProductFragment(), Constants.SCANNER_FRAGMENT_TAG);
+        fragmentTransaction.addToBackStack(Constants.SCANNER_FRAGMENT_TAG);
         fragmentTransaction.commit();
     }
 

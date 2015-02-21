@@ -40,5 +40,6 @@
     <string name="enter_product">Enter Product</string>
     <string name="history_label">Recently Scanned Food</string>
     <string name="save_product">Save Product</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

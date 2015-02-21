@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.manji.cooper.R;
+import com.manji.cooper.model.Constants;
 
 public class MainFragment extends Fragment {
 
@@ -62,13 +63,17 @@ public class MainFragment extends Fragment {
     }
 
     private void showCamera() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, new ScannerFragment());
-        fragmentTransaction.addToBackStack(null);
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
+                .replace(R.id.frame, new ScannerFragment(), Constants.SCANNER_FRAGMENT_TAG);
+
         fragmentTransaction.commit();
     }
 
     private void showEnterProduct() {
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
+                .replace(R.id.frame, new ProductFragment(), Constants.PRODUCT_FRAGMENT_TAG);
+
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.manji.cooper.R;
+import com.manji.cooper.model.Constants;
 
 public class ProductFragment extends Fragment {
 
@@ -23,6 +26,7 @@ public class ProductFragment extends Fragment {
     private ActionMode actionMode;
 
     private Button saveProductButton;
+    private Button cancelButton;
     private ListView productListView;
     private EditText enterProductEditText;
 
@@ -38,6 +42,7 @@ public class ProductFragment extends Fragment {
         enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
         productListView = (ListView) layoutView.findViewById(R.id.product_listview);
         saveProductButton = (Button) layoutView.findViewById(R.id.save_product_button);
+        cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
         
         saveProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,17 +50,18 @@ public class ProductFragment extends Fragment {
             }
         });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popFragment();
+            }
+        });
+
         return layoutView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    private void popFragment() {
+        getActivity().onBackPressed();
     }
 
     /** Search **/
