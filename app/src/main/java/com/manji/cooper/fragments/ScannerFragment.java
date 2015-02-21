@@ -166,12 +166,12 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
                 if (jsonObject.has("error"))
                     error = jsonObject.getString("error");
 
-                final boolean itemMatch = (name != null && error == null);
+                final boolean itemMatch = (name != null && !name.isEmpty() && error == null);
 
-                if (itemMatch)
+                if (!itemMatch)
                     itemDetailText.setText("Couldn't recognize barcode");
-                else
-                    itemDetailText.setText(name + " | " + code);
+                else if (name != null && code != null)
+                    itemDetailText.setText(name + " " + code);
 
                 final String itemName = name;
 

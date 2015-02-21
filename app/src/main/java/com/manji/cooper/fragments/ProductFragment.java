@@ -79,7 +79,7 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        if (filteredResults != null){
+        if (filteredResults != null && !filteredResults.isEmpty()){
             productAdapter.setFilteredResults(filteredResults);
             hintTextView.setVisibility(View.GONE);
         }
