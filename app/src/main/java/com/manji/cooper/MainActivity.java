@@ -1,6 +1,8 @@
 package com.manji.cooper;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,11 +55,13 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private Toolbar toolbar;
     private View frameLayout;
     private SearchView searchView;
+    private View errorView;
 
     private DataManager dataManager;
 
     private HashMap<Integer, CSVData> data;
     private HashMap<String, ItemInfo> items;
+
 
 
     @Override
@@ -77,6 +82,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerListView = (ListView) findViewById(R.id.drawer_listview);
         drawerView = (RelativeLayout) findViewById(R.id.drawer_view);
+        errorView = findViewById(R.id.error_overlay);
 
         // Set the drawer adapter
         drawerAdapter = new DrawerAdapter(this, drawerArrayList);
@@ -104,6 +110,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
+
+        errorView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                errorView.setVisibility(View.GONE);
+                return true;
+            }
+        });
 
         // Set up the fragments
         mainFragment = new MainFragment();
@@ -233,5 +247,15 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         Log.d(TAG, "Data retrieved");
         this.data = DataManager.getInstance().getData();
         this.items = DataManager.getInstance().getItems();
+    }
+
+    @Override
+    public void onError(String error) {
+        Utility.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                errorView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

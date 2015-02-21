@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by douglaspereira on 2015-02-20.
@@ -23,30 +25,32 @@ public class FetchResourceAsyncTask extends AsyncTask {
 
     private final String TAG = FetchResourceAsyncTask.class.getSimpleName();
 
-    private String url = null;
+    private String path = null;
     private OnResourceFetchedListener listener = null;
 
-    public FetchResourceAsyncTask(String url, OnResourceFetchedListener listn){
-        this.url = url;
+    private int CONNECTION_TIMEOUT = 10000;
+
+    public FetchResourceAsyncTask(String path, OnResourceFetchedListener listn){
+        this.path = path;
         listener = listn;
     }
 
     @Override
     protected String doInBackground(Object[] params) {
 
-        Log.d(TAG, "Fetching resource from url: " + url);
+        Log.d(TAG, "Fetching resource from url: " + path);
 
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(url);
         InputStream inputStream = null;
 
         StringBuilder sb = new StringBuilder();
 
         //retrieve resource from url
         try{
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            inputStream = httpEntity.getContent();
+            URL url = new URL(path);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+            inputStream = connection.getInputStream();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream), 8);
 

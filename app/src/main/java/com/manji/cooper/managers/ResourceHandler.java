@@ -42,6 +42,7 @@ public class ResourceHandler implements OnResourceFetchedListener {
 
         FetchResourceAsyncTask task = new FetchResourceAsyncTask(url, this);
         task.execute();
+
     }
 
     @Override

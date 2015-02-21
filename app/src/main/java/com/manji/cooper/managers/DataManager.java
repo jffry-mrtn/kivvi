@@ -68,6 +68,7 @@ public class DataManager{
         @Override
         public void onError(String error) {
             Log.e("CSV error", error);
+            onDataRetrievedListener.onError(error);
         }
     };
 
