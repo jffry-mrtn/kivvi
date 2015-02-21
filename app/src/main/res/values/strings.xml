@@ -12,4 +12,9 @@
     <string name="search">Search</string>
     <string name="search_hint">Search items</string>
 
+
+    <string name="csv_attributes_names">_attribute_names_</string>
+    <string name="csv_attributes_units">_attributes_units_</string>
+    <string name="nutrient_value_2008_eggs">http://www.hc-sc.gc.ca/data-donnees/hpfb-dgpsa/eggs_oeufs/nutrient_value_eggs_and_egg_dishes_2008_valeur_nutritive_oeufs_et_plats_base_oeufs-eng.csv</string>
+
 </resources>
