@@ -64,10 +64,7 @@ public class MainFragment extends Fragment {
     }
 
     private void showCamera() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
-                .replace(R.id.frame, new ScannerFragment(), Constants.SCANNER_FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
+        ((MainActivity) getActivity()).showScannerFragment();
     }
 
     private void showEnterProduct() {

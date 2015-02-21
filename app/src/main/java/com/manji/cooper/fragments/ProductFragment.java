@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.adapter.ProductAdapter;
 import com.manji.cooper.custom.CSVData;
@@ -78,6 +79,7 @@ public class ProductFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getFragmentManager().popBackStackImmediate();
             }
         });
         return layoutView;
@@ -103,51 +105,6 @@ public class ProductFragment extends Fragment {
     }
 
     public void clearItemSelection() {
-//        mainAdapter.notifyDataSetChanged();
+        productAdapter.notifyDataSetChanged();
     }
-
-    private class ActionModeCallback implements ListView.MultiChoiceModeListener {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            MenuInflater inflater = mode.getMenuInflater();
-//            inflater.inflate(R.menu.main_context_menu, menu);
-            mode.setTitle(getResources().getString(R.string.select_elements));
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            actionMode = mode;
-            switch (item.getItemId()) {
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-        }
-
-        @Override
-        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-            final int numSelected = productListView.getCheckedItemCount();
-
-            switch (numSelected) {
-                case 0:
-                    actionMode.setSubtitle(null);
-                    break;
-                case 1:
-                    actionMode.setSubtitle(getResources().getString(R.string.one_item_selected));
-                    break;
-                default:
-                    actionMode.setSubtitle(String.format(getResources().getString(R.string.more_items_selected), numSelected));
-                    break;
-            }
-        }
-    };
 }

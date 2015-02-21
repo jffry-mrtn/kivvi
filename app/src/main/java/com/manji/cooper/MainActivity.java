@@ -1,5 +1,6 @@
 package com.manji.cooper;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private String[] drawerArrayList;
     private MainFragment mainFragment;
     private ScannerFragment scannerFragment;
+    private ProductFragment productFragment;
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
@@ -104,6 +106,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         // Set up the fragments
         mainFragment = new MainFragment();
         scannerFragment = new ScannerFragment();
+        productFragment = new ProductFragment();
 
         // Load initial fragment
         FragmentManager fm = getFragmentManager();
@@ -129,52 +132,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    if (query != null) {
-                        if (mainFragment.isVisible())
-                            mainFragment.search(query);
-                    }
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (newText != null) {
-                        if (mainFragment.isVisible()) {
-                            if (newText.equalsIgnoreCase("")) {
-                                mainFragment.clearSearchFilter();
-                            } else {
-                                mainFragment.search(newText);
-                            }
-                        }
-                    }
-                    return false;
-                }
-            });
-
-            searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        searchItem.collapseActionView();
-                        searchView.setQuery("", false);
-                    }
-                }
-            });
-
-            searchView.setQueryHint(getString(R.string.search_hint));
-        }
-
         return true;
     }
 
@@ -200,11 +157,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
     }
@@ -214,6 +166,17 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     /**
      * Set the ActionBar title to @title.
      */
@@ -221,14 +184,20 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         toolbar.setTitle(title);
     }
 
+    public void showScannerFragment() {
+        getFragmentManager().beginTransaction()
+                .add(R.id.frame, scannerFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showProductFragment() {
-        ProductFragment productFragment = new ProductFragment();
         productFragment.setData(data);
 
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
-                .replace(R.id.frame, productFragment, Constants.PRODUCT_FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
+        getFragmentManager().beginTransaction()
+                .add(R.id.frame, productFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private class DrawerClickListener implements ListView.OnItemClickListener {
