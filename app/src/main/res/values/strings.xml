@@ -34,5 +34,10 @@
 
     <string name="csv_attributes_names">_attribute_names_</string>
     <string name="csv_attributes_units">_attributes_units_</string>
-    
+    <string name="dashboard_title">Today you have eaten</string>
+    <string name="dashboard_calories">calories</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="enter_product">Enter Product</string>
+    <string name="history_label">Recently Scanned Food</string>
+
 </resources>
