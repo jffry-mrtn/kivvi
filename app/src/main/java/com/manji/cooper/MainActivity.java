@@ -28,7 +28,6 @@ import com.manji.cooper.fragments.ProductFragment;
 import com.manji.cooper.fragments.ScannerFragment;
 import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
-import com.manji.cooper.utils.LocalStorage;
 import com.manji.cooper.utils.Utility;
 
 import java.util.HashMap;
@@ -191,21 +190,21 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
     public void showNutritionFragment() {
         getFragmentManager().beginTransaction()
-                .add(R.id.frame, nutritionFragment)
+                .replace(R.id.frame, nutritionFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
     public void showScannerFragment() {
         getFragmentManager().beginTransaction()
-                .add(R.id.frame, scannerFragment)
+                .replace(R.id.frame, scannerFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
     public void showProductFragment() {
         getFragmentManager().beginTransaction()
-                .add(R.id.frame, productFragment)
+                .replace(R.id.frame, productFragment)
                 .addToBackStack(null)
                 .commit();
     }
