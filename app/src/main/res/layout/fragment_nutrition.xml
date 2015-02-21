@@ -1,53 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBEBEB">
 
-    <TextView
-        android:id="@+id/food_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark_grey" />
-
-    <TextView
-        android:id="@+id/food_calories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark_grey" />
-
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:paddingTop="64dp"
+        android:paddingRight="32dp"
+        android:paddingLeft="32dp"
+        android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/quantity_label"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:text="@string/your_meal"
+                android:textSize="17sp"
+                android:textColor="@color/dark_grey"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:id="@+id/food_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_grey" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:textSize="25sp"
-            android:textColor="@color/dark_grey" />
+            android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/quantity_seekbar"
+            <TextView
+                android:id="@+id/food_calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:textSize="70sp"
+                android:text="281"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:text="@string/calories"
+                android:textSize="17sp"
+                android:textColor="@color/dark_grey"
+                android:textAllCaps="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:max="100" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/save_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:padding="16dp"
-        android:text="@string/save_product"
-        android:textColor="@android:color/white"
-        android:background="@drawable/primary_button" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/quantity_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:textSize="25sp"
+                android:textColor="@color/dark_grey" />
+
+            <SeekBar
+                android:id="@+id/quantity_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:max="100" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/save_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:padding="16dp"
+            android:text="@string/save_product"
+            android:textColor="@android:color/white"
+            android:background="@drawable/primary_button" />
+    </LinearLayout>
+</ScrollView>

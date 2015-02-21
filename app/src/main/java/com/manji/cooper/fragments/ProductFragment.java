@@ -117,7 +117,7 @@ public class ProductFragment extends Fragment {
             ArrayList<String> values = productAdapter.getFilteredHashMap().get(clickedItem).values;
             CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
 
-            ((MainActivity) getActivity()).showNutritionFragment();
+            ((MainActivity) getActivity()).showNutritionFragment(clickedItem, values, dataSet);
         }
     }
 }

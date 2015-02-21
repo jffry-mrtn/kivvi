@@ -30,6 +30,7 @@ import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.utils.Utility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -188,7 +189,9 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         toolbar.setTitle(title);
     }
 
-    public void showNutritionFragment() {
+    public void showNutritionFragment(String meal, ArrayList<String> values, CSVData dataSet) {
+        nutritionFragment.setData(meal, values, dataSet);
+
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame, nutritionFragment)
                 .addToBackStack(null)
