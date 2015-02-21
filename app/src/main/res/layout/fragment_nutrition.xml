@@ -55,7 +55,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/primary"
                 android:textSize="70sp"
-                android:text="281"
                 android:textAllCaps="true" />
 
             <TextView

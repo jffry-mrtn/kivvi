@@ -75,7 +75,7 @@ public class NutritionFragment extends Fragment {
     }
 
     private void initData() {
-        foodTitleTextView.setText(mealTitle);
+        foodTitleTextView.setText(mealTitle.substring(0, 1).toUpperCase() + mealTitle.substring(1));
         foodCaloriesTextView.setText("281");
     }
 
