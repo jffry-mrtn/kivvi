@@ -2,6 +2,7 @@ package com.manji.cooper.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class NutritionFragment extends Fragment {
     private TextView foodTitleTextView;
     private TextView foodCaloriesTextView;
 
+    private LinearLayout nutritionLayout;
+
     private String mealTitle;
     private ArrayList<String> nutritionalValues;
     private CSVData dataSet;
@@ -46,6 +50,7 @@ public class NutritionFragment extends Fragment {
         layoutView = inflater.inflate(R.layout.fragment_nutrition, container, false);
         context = getActivity().getApplicationContext();
 
+        nutritionLayout = (LinearLayout) layoutView.findViewById(R.id.nutrition_layout);
         foodTitleTextView = (TextView) layoutView.findViewById(R.id.food_title);
         foodCaloriesTextView = (TextView) layoutView.findViewById(R.id.food_calories);
 
@@ -75,7 +80,39 @@ public class NutritionFragment extends Fragment {
     }
 
     private void initData() {
+        for (String attrName : dataSet.getAttributeNames()) {
+            if (!attrName.equalsIgnoreCase("food name")) {
+                String attrValue = dataSet.getValue(mealTitle, attrName);
+
+                TextView attributeLabelTextView = new TextView(context);
+                TextView attributeValueTextView = new TextView(context);
+
+                LinearLayout.LayoutParams lpLabel = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lpLabel.setMargins(0, 30, 0, 0);
+
+                LinearLayout.LayoutParams lpValue = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lpValue.setMargins(0, 15, 0, 0);
+
+                // Attribute Label
+                attributeLabelTextView.setText(attrName);
+                attributeLabelTextView.setTextColor(context.getResources().getColor(R.color.primary));
+                attributeLabelTextView.setAllCaps(true);
+                attributeLabelTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+                attributeLabelTextView.setLayoutParams(lpLabel);
+
+                // Attribute Value
+                attributeValueTextView.setText(attrValue.equalsIgnoreCase("") ? "N/A" : attrValue);
+                attributeValueTextView.setTextColor(context.getResources().getColor(R.color.dark_grey));
+                attributeValueTextView.setLayoutParams(lpValue);
+
+                nutritionLayout.addView(attributeLabelTextView);
+                nutritionLayout.addView(attributeValueTextView);
+            }
+        }
+
         foodTitleTextView.setText(mealTitle.substring(0, 1).toUpperCase() + mealTitle.substring(1));
+
+        // Set the calories
         foodCaloriesTextView.setText("281");
     }
 
