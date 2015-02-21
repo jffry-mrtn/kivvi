@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,9 +17,11 @@ import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.adapter.ProductAdapter;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductFragment extends Fragment {
 
@@ -34,6 +35,9 @@ public class ProductFragment extends Fragment {
     private EditText enterProductEditText;
     private ProductAdapter productAdapter;
     private TextView hintTextView;
+
+    private HashMap<String, ItemInfo> filteredResults = null;
+    private boolean filteredFromBarcode = false;
 
     public ProductFragment() {
         super();
@@ -74,6 +78,11 @@ public class ProductFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        if (filteredResults != null){
+            productAdapter.setFilteredResults(filteredResults);
+            hintTextView.setVisibility(View.GONE);
+        }
 
         return layoutView;
     }
@@ -119,5 +128,13 @@ public class ProductFragment extends Fragment {
 
             ((MainActivity) getActivity()).showNutritionFragment(clickedItem, values, dataSet);
         }
+    }
+
+    /* Set filtered results retrieved from barcode scan
+     *
+     */
+    public void setFilteredResults(HashMap<String, ItemInfo> fr){
+        filteredResults = fr;
+        filteredFromBarcode = true;
     }
 }

@@ -184,9 +184,7 @@ public class ScannerFragment extends Fragment implements ZBarScannerView.ResultH
                         ProductFragment productFragment = new ProductFragment();
 
                         if (itemMatch){
-                            HashMap<String, ItemInfo> r =
-                                    getFilteredResults("Omelet, spanish eggs onions");
-                            ;
+                            HashMap<String, ItemInfo> r = getFilteredResults(itemName);
                             productFragment.setFilteredResults(r);
                         }
 

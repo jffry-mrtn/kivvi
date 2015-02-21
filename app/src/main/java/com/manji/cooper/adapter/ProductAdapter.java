@@ -104,4 +104,14 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
         };
     }
 
+    public void setFilteredResults (HashMap<String, ItemInfo> fd){
+        filteredHashMap = fd;
+        filteredData = new ArrayList<>();
+
+        for (String s: fd.keySet())
+            filteredData.add(s);
+
+        notifyDataSetChanged();
+    }
+
 }
