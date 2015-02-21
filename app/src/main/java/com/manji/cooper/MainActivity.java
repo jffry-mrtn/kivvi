@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private View frameLayout;
     private SearchView searchView;
     private View errorView;
+    private View loadingView;
 
     private DataManager dataManager;
 
@@ -84,6 +85,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         drawerListView = (ListView) findViewById(R.id.drawer_listview);
         drawerView = (RelativeLayout) findViewById(R.id.drawer_view);
         errorView = findViewById(R.id.error_overlay);
+        loadingView = findViewById(R.id.loading_overlay);
 
         // Set the drawer adapter
         drawerAdapter = new DrawerAdapter(this, drawerArrayList);
@@ -116,6 +118,13 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 errorView.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+        loadingView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
@@ -250,6 +259,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         Log.d(TAG, "Data retrieved");
         this.data = DataManager.getInstance().getData();
         this.items = DataManager.getInstance().getItems();
+
+        Utility.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                errorView.setVisibility(View.GONE);
+                loadingView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -258,6 +275,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
             @Override
             public void run() {
                 errorView.setVisibility(View.VISIBLE);
+                loadingView.setVisibility(View.GONE);
             }
         });
     }

@@ -22,6 +22,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white" />
+
+            <include android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/error_overlay_layout"/>
+
+            <include android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/loading_overlay_layout"/>
+
         </RelativeLayout>
 
         <!-- Drawer -->
@@ -29,22 +40,5 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-    <RelativeLayout
-        android:id="@+id/error_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="#AA000000"
-        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:text="Error retrieving resources"
-            android:layout_centerInParent="true"
-            />
-
-    </RelativeLayout>
 </RelativeLayout>
