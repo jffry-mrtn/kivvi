@@ -1,6 +1,7 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,78 +13,55 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.manji.cooper.R;
 import com.manji.cooper.model.Constants;
 
-public class MainFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
     private Context context;
     private View layoutView;
     private ActionMode actionMode;
 
-    private ListView historyListView;
-    private ImageButton barcodeButton;
-    private Button enterProductButton;
-    private TextView caloriesTextView;
+    private Button saveProductButton;
+    private Button cancelButton;
+    private ListView productListView;
+    private EditText enterProductEditText;
 
-
-    public MainFragment() {
+    public ProductFragment() {
         super();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layoutView = inflater.inflate(R.layout.fragment_main, container, false);
+        layoutView = inflater.inflate(R.layout.fragment_product, container, false);
         context = getActivity().getApplicationContext();
 
-        caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
-        barcodeButton = (ImageButton) layoutView.findViewById(R.id.scan_barcode_button);
-        enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
-        historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
+        enterProductEditText = (EditText) layoutView.findViewById(R.id.enter_product_edittext);
+        productListView = (ListView) layoutView.findViewById(R.id.product_listview);
+        saveProductButton = (Button) layoutView.findViewById(R.id.save_product_button);
+        cancelButton = (Button) layoutView.findViewById(R.id.cancel_button);
         
-        barcodeButton.setOnClickListener(new View.OnClickListener() {
+        saveProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCamera();
             }
         });
 
-        enterProductButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEnterProduct();
+                popFragment();
             }
         });
 
         return layoutView;
     }
 
-    private void showCamera() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
-                .replace(R.id.frame, new ScannerFragment(), Constants.SCANNER_FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
-    }
-
-    private void showEnterProduct() {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction()
-                .replace(R.id.frame, new ProductFragment(), Constants.PRODUCT_FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    private void popFragment() {
+        getActivity().onBackPressed();
     }
 
     /** Search **/
@@ -134,7 +112,7 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-            final int numSelected = historyListView.getCheckedItemCount();
+            final int numSelected = productListView.getCheckedItemCount();
 
             switch (numSelected) {
                 case 0:
