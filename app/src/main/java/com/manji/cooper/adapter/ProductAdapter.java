@@ -1,6 +1,7 @@
 package com.manji.cooper.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
     private HashMap<Integer, CSVData> data;
     private ArrayList<String> filteredData;
 
+    private HashMap<String, DataManager.ItemInfo> filteredHashMap;
+
     public ProductAdapter(Context context) {
         this.context = context;
         this.data = DataManager.getInstance().getData();
@@ -35,6 +38,10 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
         }
 
         return 0;
+    }
+
+    public HashMap<String, DataManager.ItemInfo> getFilteredHashMap() {
+        return filteredHashMap;
     }
 
     @Override
@@ -70,17 +77,10 @@ public class ProductAdapter extends BaseAdapter implements Filterable {
                     searchResults.values = data;
                     searchResults.count = data.size();
                 } else {
-                    HashMap<String, DataManager.ItemInfo> filteredHashMap = DataManager.getInstance().getFilteredData(constraint.toString());
+                    filteredHashMap = DataManager.getInstance().getFilteredData(constraint.toString());
 
                     ArrayList<String> filteredResults = new ArrayList<String>();
                     filteredResults.addAll(filteredHashMap.keySet());
-
-                    // Dont need this below vvvvv
-                    for (String f: filteredResults){
-                        int csvKey = filteredHashMap.get(f).csvKey;
-                        ArrayList<String> values = filteredHashMap.get(f).values;
-                        CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
-                    }
 
                     searchResults.values = filteredResults;
                     searchResults.count = filteredResults.size();

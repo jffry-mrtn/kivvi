@@ -18,6 +18,7 @@ import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.adapter.ProductAdapter;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.managers.DataManager;
 
 import java.util.ArrayList;
 
@@ -110,7 +111,11 @@ public class ProductFragment extends Fragment {
     private class productListViewOnClickListener implements android.widget.AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            productAdapter.getItem(position);
+            String clickedItem = productAdapter.getItem(position);
+
+            int csvKey = productAdapter.getFilteredHashMap().get(clickedItem).csvKey;
+            ArrayList<String> values = productAdapter.getFilteredHashMap().get(clickedItem).values;
+            CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
 
             ((MainActivity) getActivity()).showNutritionFragment();
         }
