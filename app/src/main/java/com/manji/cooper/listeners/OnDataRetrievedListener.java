@@ -5,5 +5,6 @@ package com.manji.cooper.listeners;
  */
 public interface OnDataRetrievedListener {
     public void onDataRetrieved();
+    public void onRetrievalStarted();
     public void onError(String error);
 }

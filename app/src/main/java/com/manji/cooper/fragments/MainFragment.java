@@ -182,7 +182,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         c.add(Calendar.DATE, 2);
         timeEnd = c.getTime();
 
-        homeTitleTextView.setText("Your nutritional overview today");
+        homeTitleTextView.setText(getResources().getString(R.string.overview_day));
 
         if (timeFrame.equals(TIME_FRAME.WEEK)){
             c = clearCalendar(c);
@@ -191,7 +191,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_WEEK));
             timeEnd = c.getTime();
 
-            homeTitleTextView.setText("Your nutritional overview this week");
+            homeTitleTextView.setText(getResources().getString(R.string.overview_week));
+
 
         }else if (timeFrame.equals(TIME_FRAME.MONTH)){
             c = clearCalendar(c);
@@ -200,7 +201,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             c.set(Calendar.DATE, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
             timeEnd = c.getTime();
 
-            homeTitleTextView.setText("Your nutritional overview this month");
+            homeTitleTextView.setText(getResources().getString(R.string.overview_week));
+
 
         }
 
@@ -212,15 +214,17 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         if (foods == null || foods.size() == 0) {
 
             yVals.add(new Entry(1.0f, 0));
-            xVals.add("Food you haven't logged yet");
+            xVals.add(getResources().getString(R.string.empty_chart_text));
 
             graph.setUsePercentValues(true);
+            homeTitleTextView.setText(getResources().getString(R.string.no_data_intructional_copy));
             homeTitleTextView.setVisibility(View.VISIBLE);
             homeTitleTextView.setTextSize(20);
             homeTitleTextView.setAllCaps(false);
             time_frame_cont.setVisibility(View.GONE);
 
         } else {
+            graph.setUsePercentValues(false);
             homeTitleTextView.setVisibility(View.VISIBLE);
             homeTitleTextView.setTextSize(18);
 
@@ -402,7 +406,6 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
     @Override
     public void onNothingSelected() {
-        Log.d(TAG, "Nothing");
         chartDetailView.setVisibility(View.GONE);
         titleLayout.setVisibility(View.VISIBLE);
 
