@@ -99,7 +99,10 @@ public class NutritionFragment extends Fragment {
 
     private void saveFood() {
         // First, save the new weight
-        food.getDataSet().setValue(food.getMealTitle(), "weight", Integer.toString(quantitySeekbar.getProgress()));
+        float w = Float.parseFloat(food.getDataSet().getValue(food.getMealTitle(), "weight"));
+        float factor = Float.parseFloat(Integer.toString(quantitySeekbar.getProgress())) / w;
+
+        food.setFactor(factor);
 
         LocalStorage localStorage = new LocalStorage(LocalStorage.STORAGE_KEY);
 
