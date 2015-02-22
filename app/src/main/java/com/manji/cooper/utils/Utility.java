@@ -52,16 +52,21 @@ public class Utility {
     }
 
 
-    public static ArrayList<String> getFormattedAttributeNames(int csvKey){
-        List<String> units = DataManager.getInstance().getData().get(csvKey).getAttributeUnits();
-        List<String> names = DataManager.getInstance().getData().get(csvKey).getAttributeNames();
-        ArrayList<String> appendedNames = new ArrayList<>();
+    public static ArrayList<String> getFormattedAttributeNames(int csvKey) {
+        ArrayList<String> appendedNames;
+        try {
+            List<String> units = DataManager.getInstance().getData().get(csvKey).getAttributeUnits();
+            List<String> names = DataManager.getInstance().getData().get(csvKey).getAttributeNames();
+            appendedNames = new ArrayList<>();
 
-        if (units.size() == names.size()){
+            if (units.size() == names.size()) {
 
-            for (int i=0; i < names.size()-1; i++) {
-                appendedNames.add(names.get(i).toUpperCase() + (units.get(i).trim().isEmpty() || units.get(i) == null ? "" : " (" + units.get(i) + ")"));
+                for (int i = 0; i < names.size() - 1; i++) {
+                    appendedNames.add(names.get(i).toUpperCase() + (units.get(i).trim().isEmpty() || units.get(i) == null ? "" : " (" + units.get(i) + ")"));
+                }
             }
+        } catch (NullPointerException e) {
+            return new ArrayList<String>();
         }
 
         return appendedNames;
