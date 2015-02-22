@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.components.Legend;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -133,11 +134,16 @@ public class MainFragment extends Fragment {
 
         int index = 0;
         for (String t: totals.keySet()){
-            yVals.add(new Entry(totals.get(t), index));
-            index++;
+            //Only include non-zero totals in graph
+            if (totals.get(t) == 0){
+                xVals.remove(t);
+            }else{
+                yVals.add(new Entry(totals.get(t), index));
+                index++;
+            }
         }
 
-        PieDataSet dataSet = new PieDataSet(yVals, "TEST");
+        PieDataSet dataSet = new PieDataSet(yVals, "");
 
         // add a lot of colors
 
@@ -164,11 +170,13 @@ public class MainFragment extends Fragment {
 
         graph.animateY(800);
         graph.setVisibility(View.VISIBLE);
+        graph.setDrawSliceText(false);
 
         PieData pieData = new PieData(xVals, dataSet);
         graph.setData(pieData);
 
-        //graph.highlightValues(null);
+        Legend leg = graph.getLegend();
+        leg.setPosition(Legend.LegendPosition.PIECHART_CENTER);
 
         //graph.invalidate();
     }
