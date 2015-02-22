@@ -62,7 +62,7 @@
                 android:textStyle="bold"
                 android:text="Start adding the food items you consume so Kivvi can track your nutritional intake!"
                 android:textSize="18sp"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/darker_grey"
                 android:textAllCaps="true" />
 
             <LinearLayout

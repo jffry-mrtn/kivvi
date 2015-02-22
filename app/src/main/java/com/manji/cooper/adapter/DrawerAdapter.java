@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.manji.cooper.R;
 
@@ -37,6 +38,11 @@ public class DrawerAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View drawerRow = inflater.inflate(R.layout.drawer_item, viewGroup, false);
+
+        TextView drawerTitle = (TextView) drawerRow.findViewById(R.id.drawer_item_title);
+
+        drawerTitle.setText(getItem(i));
+        
         return drawerRow;
     }
 

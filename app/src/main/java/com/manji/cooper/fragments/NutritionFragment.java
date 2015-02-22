@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
@@ -41,6 +40,7 @@ public class NutritionFragment extends Fragment {
     private Food food;
     private int foodWeight;
     private ArrayList<Float> nutritionValueList;
+    private boolean isEditable;
 
     public NutritionFragment() {
         super();
@@ -136,6 +136,7 @@ public class NutritionFragment extends Fragment {
         quantityLabel.setText("" + foodWeight);
         quantitySeekbar.setMax((int) Math.floor(foodWeight * 2));
         quantitySeekbar.setProgress(foodWeight);
+        quantitySeekbar.setEnabled(isEditable);
 
         foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
         generateNutritionViews();
@@ -178,7 +179,7 @@ public class NutritionFragment extends Fragment {
 
         // Attribute Value
         attributeValueTextView.setText(attrValue);
-        attributeValueTextView.setTextColor(context.getResources().getColor(R.color.dark_grey));
+        attributeValueTextView.setTextColor(context.getResources().getColor(R.color.darker_grey));
         attributeValueTextView.setLayoutParams(lpValue);
 
         nutritionLayout.addView(attributeLabelTextView);
@@ -193,7 +194,8 @@ public class NutritionFragment extends Fragment {
         }
     }
 
-    public void setData(Food food) {
+    public void setData(Food food, boolean isEditable) {
         this.food = food;
+        this.isEditable = isEditable;
     }
 }

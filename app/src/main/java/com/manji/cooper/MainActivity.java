@@ -23,6 +23,7 @@ import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.fragments.DetailFragment;
+import com.manji.cooper.fragments.HistoryFragment;
 import com.manji.cooper.fragments.MainFragment;
 import com.manji.cooper.fragments.NutritionFragment;
 import com.manji.cooper.fragments.ProductFragment;
@@ -46,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private ProductFragment productFragment;
     private NutritionFragment nutritionFragment;
     private DetailFragment detailFragment;
+    private HistoryFragment historyFragment;
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
@@ -133,6 +135,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         productFragment = new ProductFragment();
         nutritionFragment = new NutritionFragment();
         detailFragment = new DetailFragment();
+        historyFragment = new HistoryFragment();
 
         // Load initial fragment
         FragmentManager fm = getFragmentManager();
@@ -213,8 +216,8 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         toolbar.setTitle(title);
     }
 
-    public void showNutritionFragment(Food food) {
-        nutritionFragment.setData(food);
+    public void showNutritionFragment(Food food, boolean isEditable) {
+        nutritionFragment.setData(food, isEditable);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame, nutritionFragment)
@@ -259,8 +262,15 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
             if (i == 0) {
                 if (!mainFragment.isVisible()) {
                     fm.beginTransaction().replace(R.id.frame, mainFragment).commit();
-                    setToolbarTitle("");
+                    setToolbarTitle("Overview");
                 }
+            } else if (i == 1) {
+                if (!historyFragment.isVisible()) {
+                    fm.beginTransaction().replace(R.id.frame, historyFragment).commit();
+                    setToolbarTitle("History");
+                }
+            } else if (i == 2) {
+
             }
 
             // Close the drawer

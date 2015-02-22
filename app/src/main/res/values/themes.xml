@@ -15,7 +15,7 @@
 
         <item name="android:actionModeBackground">@color/dark_primary</item>
         <item name="actionModeBackground">@color/dark_primary</item>
-        <item name="android:windowBackground">@color/dark_grey</item>
+        <item name="android:windowBackground">@color/darker_grey</item>
     </style>
 
     <style name="LightTextToolbarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

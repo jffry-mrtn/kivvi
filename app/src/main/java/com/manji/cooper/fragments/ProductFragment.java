@@ -127,7 +127,7 @@ public class ProductFragment extends Fragment {
             CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
 
             Food food = new Food(csvKey, mealTitle, dataSet);
-            ((MainActivity) getActivity()).showNutritionFragment(food);
+            ((MainActivity) getActivity()).showNutritionFragment(food, true);
         }
     }
 
