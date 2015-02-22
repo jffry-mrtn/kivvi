@@ -71,10 +71,15 @@ public class CSVData implements Serializable{
     /*
      * Return the value of the specified attribute from the specified entry
      */
-    public String getValue(String key, String attribute){
-        if (attributeNames == null || attributeNames.indexOf(attribute) == -1) return "";
+    public String getValue(String key, String attribute) {
+        String result;
+        try {
+            result = getEntry(key).get(attributeNames.indexOf(attribute));
+        } catch (IndexOutOfBoundsException e) {
+            result = "";
+        }
 
-        return getEntry(key).get(attributeNames.indexOf(attribute));
+        return result;
     }
 
     public List<String> getKeys(){

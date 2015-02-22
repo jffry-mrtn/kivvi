@@ -232,6 +232,9 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
                 .commit();
     }
 
+    public void resetFragments() {
+    }
+
     private class DrawerClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
