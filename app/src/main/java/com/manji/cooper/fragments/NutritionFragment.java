@@ -102,10 +102,11 @@ public class NutritionFragment extends Fragment {
     private void initData() {
         generateNutritionViews();
         int weight = Integer.parseInt(food.getDataSet().getValue(food.getMealTitle(), "weight"));
+        Log.d("EIWQUEWQOIEUWQPE", "" + weight);
 
         quantityLabel.setText("" + weight);
-        quantitySeekbar.setProgress(weight);
         quantitySeekbar.setMax((int) Math.floor(weight * 2));
+        quantitySeekbar.setProgress(weight);
 
         foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
     }
