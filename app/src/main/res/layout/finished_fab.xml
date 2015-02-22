@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.getbase.floatingactionbutton.FloatingActionButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/save_fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    fab:fab_colorNormal="@color/secondary"
+    fab:fab_title="Save Product"
+    fab:fab_colorPressed="@color/dark_secondary"
+    android:gravity="center"
+    android:src="@drawable/ic_checkmark"
+    android:layout_marginBottom="32dp"
+    android:layout_marginRight="24dp"
+    android:layout_marginEnd="24dp" />

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
@@ -36,7 +37,7 @@ public class NutritionFragment extends Fragment {
     private LinearLayout nutritionLayout;
     private ArrayList<TextView> nutritionTextViewList;
 
-    private Button doneButton;
+    private FloatingActionButton saveFAB;
     private Food food;
     private int foodWeight;
     private ArrayList<Float> nutritionValueList;
@@ -60,7 +61,7 @@ public class NutritionFragment extends Fragment {
         quantityLabel = (TextView) layoutView.findViewById(R.id.quantity_label);
         quantitySeekbar = (SeekBar) layoutView.findViewById(R.id.quantity_seekbar);
 
-        doneButton = (Button) layoutView.findViewById(R.id.done_product);
+        saveFAB = (FloatingActionButton) layoutView.findViewById(R.id.save_fab);
         
         quantitySeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -80,7 +81,7 @@ public class NutritionFragment extends Fragment {
             }
         });
 
-        doneButton.setOnClickListener(new View.OnClickListener() {
+        saveFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveFoodAndReset();
