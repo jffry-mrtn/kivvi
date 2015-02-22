@@ -34,7 +34,7 @@ import com.manji.cooper.utils.LocalStorage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainFragment extends Fragment implements OnChartValueSelectedListener {
+public class MainFragment extends Fragment {
 
     private Context context;
     private View layoutView;
@@ -87,9 +87,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         graph.setUsePercentValues(true);
         graph.setDescription("");
-
-        graph.setRotationEnabled(false);
-        graph.setOnChartValueSelectedListener(this);
+//
+//        graph.setRotationEnabled(false);
 
     }
 
@@ -265,13 +264,4 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         }
     };
 
-    @Override
-    public void onValueSelected(Entry entry, int i) {
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
 }
