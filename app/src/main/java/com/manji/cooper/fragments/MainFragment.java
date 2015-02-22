@@ -58,6 +58,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
     private String currentSelectedItem = "";
     private View titleLayout;
+    private View time_frame_cont;
 
     private class GraphItemDetails {
         public float total;
@@ -97,6 +98,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         bt_more = (Button)layoutView.findViewById(R.id.bt_more_info);
         homeTitleTextView = (TextView) layoutView.findViewById(R.id.home_title);
         titleLayout = layoutView.findViewById(R.id.title_layout);
+        time_frame_cont = layoutView.findViewById(R.id.time_frame_filter_cont);
 
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,9 +148,14 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
             graph.setUsePercentValues(true);
             homeTitleTextView.setVisibility(View.VISIBLE);
+            homeTitleTextView.setTextSize(20);
+            homeTitleTextView.setAllCaps(false);
+            time_frame_cont.setVisibility(View.GONE);
 
         } else {
             homeTitleTextView.setText("Nutritional Overview");
+            time_frame_cont.setVisibility(View.VISIBLE);
+
             HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
 
             graphInfo = new HashMap<>();
