@@ -2,7 +2,7 @@
 <resources>
 
     <style name="fab_labels_style">
-        <item name="android:background">@drawable/enter_field</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/fab_label</item>
+        <item name="android:textColor">@color/dark_grey</item>
     </style>
 </resources>

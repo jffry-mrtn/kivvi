@@ -23,7 +23,7 @@
         android:src="@drawable/ic_camera"
         android:gravity="center"
         android:paddingTop="0.5dp"
-        fab:fab_colorNormal="@color/light_primary"
+        fab:fab_colorNormal="@color/dark_grey"
         fab:fab_title="Scan Barcode"
         fab:fab_colorPressed="@color/light_grey"/>
 
@@ -34,7 +34,7 @@
         android:src="@drawable/ic_search"
         android:gravity="center"
         android:paddingTop="0.5dp"
-        fab:fab_colorNormal="@color/light_primary"
+        fab:fab_colorNormal="@color/dark_grey"
         fab:fab_title="Enter Product"
         fab:fab_colorPressed="@color/light_grey"/>
 </com.getbase.floatingactionbutton.FloatingActionsMenu>
