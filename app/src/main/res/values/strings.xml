@@ -39,7 +39,9 @@
     <string name="history_label">Recently Scanned Food</string>
     <string name="save_product">Save Product</string>
     <string name="cancel">Cancel</string>
-    
+    <string name="history">View History</string>
+    <string name="overview">Nutritional Overview</string>
+
     <!--Outpan API key-->
     <string name="outpan_api_key">0651caccf5f32e7858620cf7778e817b</string>
     <string name="get_nutrition">Get Nutrition</string>
