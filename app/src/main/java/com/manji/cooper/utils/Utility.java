@@ -99,7 +99,8 @@ public class Utility {
             appendedNames = new ArrayList<>();
 
             for (int i=0; i < names.size()-1; i++){
-                appendedNames.add(names.get(i) + " (" + units.get(i) + ")");
+                appendedNames.add(names.get(i) +
+                        (units.get(i).trim().isEmpty() ? "" : " (" + units.get(i) + ")"));
             }
         }
 
