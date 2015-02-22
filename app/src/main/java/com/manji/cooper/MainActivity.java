@@ -206,7 +206,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
     @Override
     public void onBackPressed() {
+
         FragmentManager fm = getFragmentManager();
+
+        if (historyFragment.isVisible()) {
+            fm.beginTransaction().replace(R.id.frame, mainFragment).commit();
+            setToolbarTitle("Overview");
+            return;
+        }
 
         try {
             if (fm.getBackStackEntryCount() > 0) {
@@ -321,4 +328,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
             }
         });
     }
+
+
 }
