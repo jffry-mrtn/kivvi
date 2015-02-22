@@ -129,8 +129,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         bt_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, graphInfo.get(currentSelectedItem).details.toString());
-
+                ((MainActivity) getActivity()).showDetailFragment(currentSelectedItem, graphInfo.get(currentSelectedItem).details);
             }
         });
 
@@ -166,8 +165,6 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         graph.setDescription("");
         graph.setOnChartValueSelectedListener(this);
-
-        graph.setRotationEnabled(false);
 
     }
 
