@@ -140,7 +140,7 @@ public class NutritionFragment extends Fragment {
 
     private void generateNutritionViews() {
         for (String attrName : Utility.getFormattedAttributeNames(food.getKey())) {
-            if ((!attrName.contains("FOOD NAME"))) {
+            if ((!attrName.contains("FOOD NAME")) && (!attrName.contains("WEIGHT"))) {
                 String attrValue;
 
                 if (attrName.contains(" (")) {
