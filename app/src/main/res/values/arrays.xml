@@ -3,6 +3,5 @@
     <string-array name="drawer_array">
         <item>@string/overview</item>
         <item>@string/history</item>
-        <item>@string/action_settings</item>
     </string-array>
 </resources>
