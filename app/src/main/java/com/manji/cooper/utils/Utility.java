@@ -65,9 +65,8 @@ public class Utility {
         if (units.size() == names.size()){
             appendedNames = new ArrayList<>();
 
-            for (int i=0; i < names.size()-1; i++){
-                appendedNames.add(names.get(i) +
-                        (units.get(i).trim().isEmpty() ? "" : " (" + units.get(i) + ")"));
+            for (int i=0; i < names.size()-1; i++) {
+                appendedNames.add(names.get(i).toUpperCase() + (units.get(i).trim().isEmpty() || units.get(i) == null ? "" : " (" + units.get(i) + ")"));
             }
         }
 
