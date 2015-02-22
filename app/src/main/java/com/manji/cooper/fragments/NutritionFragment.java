@@ -28,6 +28,9 @@ import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.Utility;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 
 public class NutritionFragment extends Fragment {
@@ -39,11 +42,13 @@ public class NutritionFragment extends Fragment {
     private SeekBar quantitySeekbar;
     private TextView quantityLabel;
     private TextView foodTitleTextView;
-
     private LinearLayout nutritionLayout;
+    private ArrayList<TextView> nutritionTextViewList;
 
     private Button saveButton;
     private Food food;
+    private int foodWeight;
+    private ArrayList<Float> nutritionValueList;
 
     public NutritionFragment() {
         super();
@@ -53,6 +58,9 @@ public class NutritionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutView = inflater.inflate(R.layout.fragment_nutrition, container, false);
         context = getActivity().getApplicationContext();
+
+        nutritionTextViewList = new ArrayList<>();
+        nutritionValueList = new ArrayList<>();
 
         nutritionLayout = (LinearLayout) layoutView.findViewById(R.id.nutrition_layout);
         foodTitleTextView = (TextView) layoutView.findViewById(R.id.food_title);
@@ -65,7 +73,8 @@ public class NutritionFragment extends Fragment {
         quantitySeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                quantityLabel.setText(Integer.toString(progress));
+                quantityLabel.setText(Integer.toString(progress) + " kg");
+                updateNutritionValues(progress);
             }
 
             @Override
@@ -91,6 +100,18 @@ public class NutritionFragment extends Fragment {
         return layoutView;
     }
 
+    private void updateNutritionValues(int newWeight) {
+        if (!nutritionTextViewList.isEmpty() && !nutritionValueList.isEmpty()) {
+            for (int i = 0; i < nutritionTextViewList.size(); i++) {
+                float value = nutritionValueList.get(i);
+                TextView tv = nutritionTextViewList.get(i);
+
+                float newValue = value * (((float) newWeight) / foodWeight);
+                tv.setText(Float.toString(newValue));
+            }
+        }
+    }
+
     private void saveProduct() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
@@ -100,20 +121,19 @@ public class NutritionFragment extends Fragment {
     }
 
     private void initData() {
-        generateNutritionViews();
-        int weight = Integer.parseInt(food.getDataSet().getValue(food.getMealTitle(), "weight"));
-        Log.d("EIWQUEWQOIEUWQPE", "" + weight);
+        foodWeight = Integer.parseInt(food.getDataSet().getValue(food.getMealTitle(), "weight"));
 
-        quantityLabel.setText("" + weight);
-        quantitySeekbar.setMax((int) Math.floor(weight * 2));
-        quantitySeekbar.setProgress(weight);
+        quantityLabel.setText("" + foodWeight);
+        quantitySeekbar.setMax((int) Math.floor(foodWeight * 2));
+        quantitySeekbar.setProgress(foodWeight);
 
         foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
+        generateNutritionViews();
     }
 
     private void generateNutritionViews() {
         for (String attrName : Utility.getFormattedAttributeNames(food.getKey())) {
-            if (!attrName.contains("FOOD NAME") || !attrName.contains("WEIGHT")) {
+            if ((!attrName.contains("FOOD NAME")) && (!attrName.contains("WEIGHT"))) {
                 String attrValue;
 
                 if (attrName.contains(" (")) {
@@ -121,6 +141,9 @@ public class NutritionFragment extends Fragment {
                 } else {
                     attrValue = food.getDataSet().getValue(food.getMealTitle(), attrName.toLowerCase());
                 }
+
+                // Handle empty/null cases
+                attrValue = attrValue.equalsIgnoreCase("") ? "0" : attrValue;
 
                 TextView attributeLabelTextView = new TextView(context);
                 TextView attributeValueTextView = new TextView(context);
@@ -138,12 +161,20 @@ public class NutritionFragment extends Fragment {
                 attributeLabelTextView.setLayoutParams(lpLabel);
 
                 // Attribute Value
-                attributeValueTextView.setText(attrValue.equalsIgnoreCase("") ? "N/A" : attrValue);
+                attributeValueTextView.setText(attrValue);
                 attributeValueTextView.setTextColor(context.getResources().getColor(R.color.dark_grey));
                 attributeValueTextView.setLayoutParams(lpValue);
 
                 nutritionLayout.addView(attributeLabelTextView);
                 nutritionLayout.addView(attributeValueTextView);
+                nutritionTextViewList.add(attributeValueTextView);
+
+                // Keep track of the nutrition values in order
+                try {
+                    nutritionValueList.add(NumberFormat.getInstance().parse(attrValue.replaceAll("[a-zA-Z]", "")).floatValue());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
