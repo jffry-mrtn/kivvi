@@ -208,10 +208,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
 
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStackImmediate();
-        } else {
-            super.onBackPressed();
+        try {
+            if (fm.getBackStackEntryCount() > 0) {
+                fm.popBackStackImmediate();
+            } else {
+                super.onBackPressed();
+            }
+        } catch (IllegalStateException e) {
+            // Don't pop any fragments
         }
     }
 
