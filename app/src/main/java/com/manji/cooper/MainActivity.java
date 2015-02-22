@@ -62,8 +62,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private HashMap<Integer, CSVData> data;
     private HashMap<String, ItemInfo> items;
 
-    private PieChart mChart;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
