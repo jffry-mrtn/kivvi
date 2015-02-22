@@ -5,7 +5,8 @@
     android:id="@+id/loading_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF" >
+    android:background="#FFF"
+    android:visibility="gone">
 
     <ProgressBar
         android:layout_width="50dp"
