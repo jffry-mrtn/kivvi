@@ -1,21 +1,15 @@
 package com.manji.cooper.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -280,7 +274,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             if (graphInfo.get(g).xIndex == entry.getXIndex()){
                 currentSelectedItem = g;
 
-                res = String.format("%.01f %s from %d items\n", entry.getVal(), graphInfo.get(g).unit, graphInfo.get(g).items.size());
+                res = String.format("%.01f %s of %s from %d item(s)\n",
+                        entry.getVal(), graphInfo.get(g).unit, g, graphInfo.get(g).items.size());
 
                 for (Food f: graphInfo.get(g).items) {
                     CSVData data = f.getDataSet();
@@ -308,19 +303,18 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         tv_details.setText(res);
         selected_item_cont.setVisibility(View.VISIBLE);
 
-        hideDetailsHandler = new Handler();
-
-        hideDetailsHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                selected_item_cont.setVisibility(View.GONE);
-                hideDetailsHandler.removeCallbacks(this);
-            }
-        }, 3500);
     }
 
     @Override
     public void onNothingSelected() {
         Log.d(TAG, "Nothing");
+        selected_item_cont.setVisibility(View.GONE);
+
+    }
+
+    public void redrawGraph(){
+        if (graph == null) return;
+
+        setGraphData();
     }
 }

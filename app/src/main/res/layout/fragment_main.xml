@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:paddingTop="10dp"
+            android:textSize="12dp"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"/>
         <Button

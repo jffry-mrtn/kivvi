@@ -266,6 +266,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
             public void run() {
                 errorView.setVisibility(View.GONE);
                 loadingView.setVisibility(View.GONE);
+                mainFragment.redrawGraph();
             }
         });
     }
