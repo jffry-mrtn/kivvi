@@ -141,7 +141,7 @@ public class DataManager{
             HashMap<String, ItemInfo> filteredResults = new HashMap<>();
 
             for (String i: data.csvItems.keySet()){
-                if (i.contains(filter)){
+                if (i.toLowerCase().contains(filter.toLowerCase())){
                     filteredResults.put(i, data.csvItems.get(i));
                 }
             }
