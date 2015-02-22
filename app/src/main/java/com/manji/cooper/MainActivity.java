@@ -227,6 +227,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     }
 
     public void showNutritionFragment(Food food, boolean isEditable) {
+        nutritionFragment = new NutritionFragment();
         nutritionFragment.setData(food, isEditable);
 
         getFragmentManager().beginTransaction()
