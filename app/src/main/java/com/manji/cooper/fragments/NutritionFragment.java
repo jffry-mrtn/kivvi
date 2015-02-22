@@ -2,11 +2,8 @@ package com.manji.cooper.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +112,7 @@ public class NutritionFragment extends Fragment {
         foods.add(food);
 
         localStorage.serializeAndStore(Constants.FOOD_ARRAYLIST_CACHE, foods);
+        ((MainActivity) getActivity()).resetFragments();
     }
 
     private void updateNutritionValues(int newWeight) {

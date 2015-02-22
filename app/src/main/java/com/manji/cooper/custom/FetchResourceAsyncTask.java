@@ -6,11 +6,6 @@ import android.util.Log;
 import com.manji.cooper.listeners.OnResourceFetchedListener;
 import com.manji.cooper.utils.Utility;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

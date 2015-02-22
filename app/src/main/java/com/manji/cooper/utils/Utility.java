@@ -3,16 +3,11 @@ package com.manji.cooper.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-
-import com.manji.cooper.custom.CSVData;
-import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

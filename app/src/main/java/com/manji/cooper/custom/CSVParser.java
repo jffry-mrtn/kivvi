@@ -1,10 +1,8 @@
 package com.manji.cooper.custom;
 
-import com.manji.cooper.R;
-import com.manji.cooper.utils.Utility;
+import java.util.ArrayList;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

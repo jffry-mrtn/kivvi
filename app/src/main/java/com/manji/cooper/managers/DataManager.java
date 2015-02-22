@@ -56,7 +56,7 @@ public class DataManager{
             //Store csv locally
             storage.setString(resource.getKey(), csvData.getStringContent());
 
-            if (isDone()){
+            if (isReady()){
                 Log.d(TAG, "Retrieved all CSV resources: " + data.csvData.size());
 
                 storage.commit();
@@ -158,7 +158,7 @@ public class DataManager{
         return data.csvData;
     }
 
-    private boolean isDone(){
+    public boolean isReady(){
         return dataRetrieved == resources.length;
     }
 

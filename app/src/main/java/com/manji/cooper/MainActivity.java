@@ -31,7 +31,6 @@ import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.Utility;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -56,7 +55,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private SearchView searchView;
     private View errorView;
     private View loadingView;
-
     private DataManager dataManager;
 
     private HashMap<Integer, CSVData> data;
@@ -64,6 +62,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Utility.activity = this;
@@ -139,13 +138,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
         setToolbarTitle(getString(R.string.app_name));
 
-
         dataManager = DataManager.getInstance();
         dataManager.setOnDataRetrievedListener(this);
 
         dataManager.fetchData();
 
-        super.onCreate(savedInstanceState);
+        if (dataManager.isReady())
+            loadingView.setVisibility(View.GONE);
+
     }
 
     @Override

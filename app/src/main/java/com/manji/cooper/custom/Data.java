@@ -1,9 +1,6 @@
 package com.manji.cooper.custom;
 
-import com.manji.cooper.managers.DataManager;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

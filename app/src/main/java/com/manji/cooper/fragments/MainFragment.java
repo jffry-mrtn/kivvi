@@ -19,13 +19,22 @@ import android.widget.TextView;
 
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.manji.cooper.custom.ItemInfo;
+import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Constants;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.LocalStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements OnChartValueSelectedListener {
 
     private Context context;
     private View layoutView;
@@ -37,6 +46,7 @@ public class MainFragment extends Fragment {
     private TextView caloriesTextView;
     private ArrayList<Food> foods;
 
+    private PieChart graph;
 
     public MainFragment() {
         super();
@@ -47,11 +57,12 @@ public class MainFragment extends Fragment {
         layoutView = inflater.inflate(R.layout.fragment_main, container, false);
         context = getActivity().getApplicationContext();
 
-        caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
+        //caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
+
         barcodeButton = (ImageButton) layoutView.findViewById(R.id.scan_barcode_button);
         enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
         historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
-        
+
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +77,101 @@ public class MainFragment extends Fragment {
             }
         });
 
+        initGraph();
+
         return layoutView;
+    }
+
+    private void initGraph(){
+        graph = (PieChart)layoutView.findViewById(R.id.pc_chart);
+
+        graph.setUsePercentValues(true);
+        graph.setDescription("");
+
+        graph.setRotationEnabled(false);
+        graph.setOnChartValueSelectedListener(this);
+
+    }
+
+    private void setGraphData(){
+        if (foods == null || foods.size() == 0) return;
+
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
+        HashMap<String, Float> totals = new HashMap<>();
+
+        //the relevant attributes
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        xVals.add("protein");
+        xVals.add("carbohydrate");
+        xVals.add("total sugar");
+        xVals.add("total fat");
+        xVals.add("cholesterol");
+        xVals.add("total dietary fibre");
+        xVals.add("saturated fat");
+
+        //add totals of all relevant attributes into table
+        for (Food f: foods) {
+            for (String v: xVals){
+                int index = f.getDataSet().getAttributeNames().indexOf(v);
+
+                if (totals.containsKey(v)){
+                    try{
+                        totals.put(v, Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) + totals.get(v));
+                    }catch (Exception ex){
+                        totals.put(v, 0.0f + totals.get(v));
+                    }
+                }else{
+                    try{
+                        totals.put(v, Float.parseFloat(items.get(f.getMealTitle()).values.get(index)));
+                    }catch (Exception ex){
+                        totals.put(v, 0.0f);
+                    }
+                }
+            }
+        }
+
+        int index = 0;
+        for (String t: totals.keySet()){
+            yVals.add(new Entry(totals.get(t), index));
+            index++;
+        }
+
+        PieDataSet dataSet = new PieDataSet(yVals, "TEST");
+
+        // add a lot of colors
+
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+
+        dataSet.setColors(colors);
+
+        graph.animateY(800);
+        graph.setVisibility(View.VISIBLE);
+
+        PieData pieData = new PieData(xVals, dataSet);
+        graph.setData(pieData);
+
+        //graph.highlightValues(null);
+
+        //graph.invalidate();
     }
 
     private void showCamera() {
@@ -85,6 +190,8 @@ public class MainFragment extends Fragment {
         if (foods == null) {
             foods = new ArrayList<>();
         }
+
+        setGraphData();
 
         super.onResume();
     }
@@ -157,4 +264,14 @@ public class MainFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onValueSelected(Entry entry, int i) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
 }

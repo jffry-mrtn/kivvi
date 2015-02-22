@@ -2,15 +2,8 @@ package com.manji.cooper.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
-
-import com.manji.cooper.custom.CSVData;
-import com.manji.cooper.custom.ItemInfo;
-import com.manji.cooper.managers.DataManager;
-
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class LocalStorage {
 
