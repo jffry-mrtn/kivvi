@@ -82,6 +82,13 @@ public class CSVData implements Serializable{
         return result;
     }
 
+    public void setValue(String key, String attribute, String value) {
+        try {
+            getEntry(key).set(attributeNames.indexOf(attribute), value);
+        } catch (IndexOutOfBoundsException e) {
+        }
+    }
+
     public List<String> getKeys(){
         List<String> keys = new ArrayList();
         keys.addAll(data.keySet());

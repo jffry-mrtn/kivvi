@@ -96,6 +96,14 @@ public class NutritionFragment extends Fragment {
     }
 
     private void saveFoodAndReset() {
+        saveFood();
+        ((MainActivity) getActivity()).resetFragments();
+    }
+
+    private void saveFood() {
+        // First, save the new weight
+        food.getDataSet().setValue(food.getMealTitle(), "weight", Integer.toString(quantitySeekbar.getProgress()));
+
         LocalStorage localStorage = new LocalStorage(LocalStorage.STORAGE_KEY);
 
         ArrayList<Food> foods = (ArrayList<Food>) localStorage.retrieveObject(Constants.FOOD_ARRAYLIST_CACHE);
@@ -107,7 +115,6 @@ public class NutritionFragment extends Fragment {
         foods.add(food);
 
         localStorage.serializeAndStore(Constants.FOOD_ARRAYLIST_CACHE, foods);
-        ((MainActivity) getActivity()).resetFragments();
     }
 
     private void updateNutritionValues(int newWeight) {
