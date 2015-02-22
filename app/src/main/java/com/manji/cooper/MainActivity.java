@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -51,6 +52,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
+    private Button bt_try_again;
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerAdapter drawerAdapter;
@@ -86,6 +88,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         drawerView = (RelativeLayout) findViewById(R.id.drawer_view);
         errorView = findViewById(R.id.error_overlay);
         loadingView = findViewById(R.id.loading_overlay);
+        bt_try_again = (Button)findViewById(R.id.try_again_button);
 
         // Set the drawer adapter
         drawerAdapter = new DrawerAdapter(this, drawerArrayList);
@@ -117,8 +120,14 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         errorView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                errorView.setVisibility(View.GONE);
                 return true;
+            }
+        });
+
+        bt_try_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataManager.fetchData();
             }
         });
 
@@ -149,9 +158,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         dataManager.setOnDataRetrievedListener(this);
 
         dataManager.fetchData();
-
-        if (dataManager.isReady())
-            loadingView.setVisibility(View.GONE);
 
     }
 
@@ -292,6 +298,12 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
                 mainFragment.redrawGraph();
             }
         });
+    }
+
+    @Override
+    public void onRetrievalStarted() {
+        errorView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
     }
 
     @Override

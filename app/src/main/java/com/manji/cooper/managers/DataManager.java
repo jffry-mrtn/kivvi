@@ -128,6 +128,7 @@ public class DataManager{
                 rh.onSuccess(key, csv);
 
             }else{
+                onDataRetrievedListener.onRetrievalStarted();
                 rh.getResource(s, csvRetrievedListn);
             }
 
