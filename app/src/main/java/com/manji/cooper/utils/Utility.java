@@ -60,17 +60,14 @@ public class Utility {
     public static ArrayList<String> getFormattedAttributeNames(int csvKey){
         List<String> units = DataManager.getInstance().getData().get(csvKey).getAttributeUnits();
         List<String> names = DataManager.getInstance().getData().get(csvKey).getAttributeNames();
-        ArrayList<String> appendedNames = null;
+        ArrayList<String> appendedNames = new ArrayList<>();
 
         if (units.size() == names.size()){
-            appendedNames = new ArrayList<>();
 
             for (int i=0; i < names.size()-1; i++) {
                 appendedNames.add(names.get(i).toUpperCase() + (units.get(i).trim().isEmpty() || units.get(i) == null ? "" : " (" + units.get(i) + ")"));
             }
         }
-
-        Log.d(TAG, appendedNames.toString());
 
         return appendedNames;
     }
