@@ -2,6 +2,7 @@ package com.manji.cooper.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -38,7 +39,6 @@ public class NutritionFragment extends Fragment {
     private SeekBar quantitySeekbar;
     private TextView quantityLabel;
     private TextView foodTitleTextView;
-    private TextView foodCaloriesTextView;
 
     private LinearLayout nutritionLayout;
 
@@ -56,7 +56,6 @@ public class NutritionFragment extends Fragment {
 
         nutritionLayout = (LinearLayout) layoutView.findViewById(R.id.nutrition_layout);
         foodTitleTextView = (TextView) layoutView.findViewById(R.id.food_title);
-        foodCaloriesTextView = (TextView) layoutView.findViewById(R.id.food_calories);
 
         quantityLabel = (TextView) layoutView.findViewById(R.id.quantity_label);
         quantitySeekbar = (SeekBar) layoutView.findViewById(R.id.quantity_seekbar);
@@ -102,15 +101,18 @@ public class NutritionFragment extends Fragment {
 
     private void initData() {
         generateNutritionViews();
-        foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
+        int weight = Integer.parseInt(food.getDataSet().getValue(food.getMealTitle(), "weight"));
 
-        // Set the calories
-        foodCaloriesTextView.setText("281");
+        quantityLabel.setText("" + weight);
+        quantitySeekbar.setProgress(weight);
+        quantitySeekbar.setMax((int) Math.floor(weight * 2));
+
+        foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
     }
 
     private void generateNutritionViews() {
         for (String attrName : Utility.getFormattedAttributeNames(food.getKey())) {
-            if (!attrName.contains("FOOD NAME")) {
+            if (!attrName.contains("FOOD NAME") || !attrName.contains("WEIGHT")) {
                 String attrValue;
 
                 if (attrName.contains(" (")) {
