@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_camera"
         android:gravity="center"
-        android:paddingTop="0.5dp"
         fab:fab_colorNormal="@color/darker_grey"
         fab:fab_title="Scan Barcode"
         fab:fab_colorPressed="@color/light_grey"/>
@@ -32,7 +31,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_search"
         android:gravity="center"
-        android:paddingTop="0.5dp"
         fab:fab_colorNormal="@color/darker_grey"
         fab:fab_title="Enter Product"
         fab:fab_colorPressed="@color/light_grey"/>
