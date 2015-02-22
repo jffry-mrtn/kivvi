@@ -1,8 +1,6 @@
 package com.manji.cooper;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.widget.RelativeLayout;
 
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
-import com.manji.cooper.custom.Data;
 import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.fragments.MainFragment;
 import com.manji.cooper.fragments.NutritionFragment;
@@ -64,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private HashMap<Integer, CSVData> data;
     private HashMap<String, ItemInfo> items;
 
-
+    private PieChart mChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +139,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
                 .commit();
 
         setToolbarTitle(getString(R.string.app_name));
+
 
         dataManager = DataManager.getInstance();
         dataManager.setOnDataRetrievedListener(this);

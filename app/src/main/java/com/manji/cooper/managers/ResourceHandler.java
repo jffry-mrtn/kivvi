@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.manji.cooper.custom.FetchResourceAsyncTask;
 import com.manji.cooper.custom.Resource;
+import com.manji.cooper.listeners.OnDataRetrievedListener;
 import com.manji.cooper.listeners.OnResourceFetchedListener;
 
 /**
@@ -45,14 +46,18 @@ public class ResourceHandler implements OnResourceFetchedListener {
 
     }
 
+    public void setOnRetrievedListener(Resource.OnRetrievedListener listn){
+        listener = listn;
+    }
+
     @Override
-    public void onSuccess(String response) {
+    public void onSuccess(String key, String response) {
 
         Resource.Type type = (isJSON(response) ? Resource.Type.JSON
                             : (isXML(response) ? Resource.Type.XML
                             : Resource.Type.OTHER));
 
-        Resource r = new Resource(response, type);
+        Resource r = new Resource(key, response, type);
 
         Log.d(TAG, "Retrieved resource: " + r);
 

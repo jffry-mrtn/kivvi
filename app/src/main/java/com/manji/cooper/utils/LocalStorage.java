@@ -17,8 +17,7 @@ public class LocalStorage {
     private final static String TAG = LocalStorage.class.getSimpleName();
 
     public final static String STORAGE_KEY = "storage_key";
-    public final static String DATA_SETS_TAG = "data_sets";
-    public final static String ALL_ITEMS_TAG = "all_items";
+    public final static String CSV_TAG = "csv_resource_";
 
 
     protected SharedPreferences sharedPref;
@@ -88,28 +87,5 @@ public class LocalStorage {
         return editor.commit();
     }
 
-    public void storeData(String tag, HashMap<Integer, CSVData> data){
-        HashMap<Integer, CSVData> obj = new HashMap();
-
-        if (tag == DATA_SETS_TAG){
-            for (Integer k: data.keySet()){
-                obj.put(k, data.get(k));
-            }
-        }
-
-        serializeAndStore(tag, obj);
-    }
-
-    public void storeItems(String tag, HashMap<String, ItemInfo> data){
-        HashMap<String, ItemInfo> obj = new HashMap();
-
-        if (tag == ALL_ITEMS_TAG){
-            for (String k: data.keySet()){
-                obj.put(k, data.get(k));
-            }
-        }
-
-        serializeAndStore(tag, obj);
-    }
 
 }

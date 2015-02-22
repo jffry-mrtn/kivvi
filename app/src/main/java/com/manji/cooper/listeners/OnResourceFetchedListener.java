@@ -5,6 +5,6 @@ package com.manji.cooper.listeners;
  */
 public interface OnResourceFetchedListener {
 
-    public void onSuccess(String resource);
+    public void onSuccess(String key, String resource);
     public void onError(String error);
 }

@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class CSVData implements Serializable{
 
-    private Context context;
     private String stringCSV = null;
 
     private List<String> attributeNames = null;
@@ -21,9 +20,8 @@ public class CSVData implements Serializable{
 
     private HashMap<String, ArrayList<String>> data = null;
 
-    public CSVData(Context c, HashMap h){
-        context = c;
-
+    public CSVData(String content, HashMap h){
+        stringCSV = content;
         data = h;
     }
 
@@ -86,29 +84,7 @@ public class CSVData implements Serializable{
         return keys;
     }
 
-//    @Override
-//    public String toString() {
-//        if (data == null || context == null) return null;
-//
-//        if (stringCSV == null){
-//            stringCSV = "";
-//            String n = null, u = null;
-//
-//            for (String k : data.keySet()){
-//                if (k == context.getResources().getString(R.string.csv_attributes_names)){
-//                    n = k;
-//                }else if (k == context.getResources().getString(R.string.csv_attributes_units)){
-//                    u = k;
-//                }else{
-//                    stringCSV = stringCSV + data.get(k) + "\n";
-//                }
-//            }
-//
-//            stringCSV = u + "\n" + stringCSV;
-//            stringCSV = n + "\n" + stringCSV;
-//
-//        }
-//
-//        return stringCSV;
-//    }
+    public String getStringContent() {
+        return stringCSV;
+    }
 }

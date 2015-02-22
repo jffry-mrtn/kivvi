@@ -9,7 +9,7 @@ public class Resource{
 
     private String content = "";
     private Type type = Type.OTHER;
-    private int length = -1;
+    private String key = "";
 
     public static interface OnRetrievedListener{
         public void onRetrieved(Resource resource);
@@ -24,9 +24,10 @@ public class Resource{
 
     }
 
-    public Resource(String res, Type t){
+    public Resource(String k, String res, Type t){
         super();
 
+        key = k;
         content = res;
         type = t;
     }
@@ -39,7 +40,7 @@ public class Resource{
         return type;
     }
 
-    public int length(){
-        return length;
+    public String getKey(){
+        return key;
     }
 }

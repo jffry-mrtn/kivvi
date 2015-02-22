@@ -55,7 +55,7 @@ public class CSVParser implements Serializable{
                 csvObjectData.put(key.toLowerCase(), entries);
         }
 
-        CSVData obj = new CSVData(Utility.activity, csvObjectData);
+        CSVData obj = new CSVData(csv, csvObjectData);
 
         obj.setAttributeNames(attributesNames);
         obj.setAttributeUnits(attributesUnits);
@@ -91,7 +91,7 @@ public class CSVParser implements Serializable{
      *
      */
     private ArrayList<String> parseEntries(String entry, String key){
-        if (key == null) return null;
+        if (key == null || entry.length() <= key.length()+1) return null;
         String attributes = entry.substring(key.length()+1);
 
         return new ArrayList<String>(Arrays.asList(attributes.split(",")));

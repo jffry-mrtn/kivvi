@@ -63,11 +63,12 @@ public class FetchResourceAsyncTask extends AsyncTask {
             inputStream.close();
 
             final String res = sb.toString();
+            final String key = url.hashCode() + "";
 
             Utility.activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onSuccess(res);
+                    listener.onSuccess(key, res);
                 }
             });
 

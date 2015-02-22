@@ -53,15 +53,15 @@ public class DataManager{
 
             dataRetrieved++;
 
+            //Store csv locally
+            storage.setString(resource.getKey(), csvData.getStringContent());
+
             if (isDone()){
                 Log.d(TAG, "Retrieved all CSV resources: " + data.csvData.size());
 
-                //Store everything locally
-                storage.storeData(LocalStorage.DATA_SETS_TAG, data.csvData);
-                storage.storeItems(LocalStorage.ALL_ITEMS_TAG, data.csvItems);
+                storage.commit();
 
                 onDataRetrievedListener.onDataRetrieved();
-                //Callback or notify that all set have been retrieved
             }
         }
 
@@ -112,24 +112,26 @@ public class DataManager{
     }
 
     public void fetchData(){
-        data.csvData = Utility.getDataFromStorage(storage);
-        data.csvItems = Utility.getItemsFromStorage(storage);
 
-//        if (data == null || items == null){
-            data.csvData = new HashMap<>();
-            data.csvItems = new HashMap<>();
+        data.csvData = new HashMap<>();
+        data.csvItems = new HashMap<>();
 
-            ResourceHandler rh = ResourceHandler.getInstance();
+        ResourceHandler rh = ResourceHandler.getInstance();
 
-            Log.d(TAG, "Fetching CSV resources");
+        Log.d(TAG, "Fetching CSV resources");
 
-            for (String s: resources){
+        for (String s: resources){
+            String key = s.hashCode()+"";
+            if (storage.containsKey(key)){
+                String csv = storage.getString(key);
+                rh.setOnRetrievedListener(csvRetrievedListn);
+                rh.onSuccess(key, csv);
+
+            }else{
                 rh.getResource(s, csvRetrievedListn);
             }
-//        }
-//        else{
-//            onDataRetrievedListener.onDataRetrieved();
-//        }
+
+        }
     }
 
     public HashMap<String, ItemInfo> getFilteredData(String filter){

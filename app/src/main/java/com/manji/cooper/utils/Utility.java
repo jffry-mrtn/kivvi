@@ -56,39 +56,6 @@ public class Utility {
         return size.y;
     }
 
-    public static HashMap<Integer, CSVData> getDataFromStorage(LocalStorage storage){
-        boolean isStored = storage.containsKey(LocalStorage.DATA_SETS_TAG);
-
-        HashMap<Integer, CSVData> data = null;
-
-        try{
-            if (isStored)
-                data = (HashMap<Integer, CSVData>)storage.retrieveObject(LocalStorage.DATA_SETS_TAG);
-
-        }catch (Exception ex){
-            Log.e(TAG, ex.toString());
-            return null;
-        }
-
-        return data;
-    }
-
-    public static HashMap<String, ItemInfo> getItemsFromStorage(LocalStorage storage){
-        boolean isStored = storage.containsKey(LocalStorage.ALL_ITEMS_TAG);
-
-        HashMap<String, ItemInfo> data = null;
-
-        try{
-            if (isStored)
-                data = (HashMap<String, ItemInfo>)storage.retrieveObject(LocalStorage.ALL_ITEMS_TAG);
-
-        }catch (Exception ex){
-            Log.e(TAG, ex.toString());
-            return null;
-        }
-
-        return data;
-    }
 
     public static ArrayList<String> getFormattedAttributeNames(int csvKey){
         List<String> units = DataManager.getInstance().getData().get(csvKey).getAttributeUnits();
