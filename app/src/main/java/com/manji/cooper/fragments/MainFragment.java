@@ -321,13 +321,13 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         // add a lot of colors
         dataSet.setColors(new int[] {
-                getResources().getColor(R.color.graph_7),
-                getResources().getColor(R.color.graph_6),
-                getResources().getColor(R.color.graph_5),
-                getResources().getColor(R.color.graph_4),
-                getResources().getColor(R.color.graph_3),
+                getResources().getColor(R.color.graph_1),
                 getResources().getColor(R.color.graph_2),
-                getResources().getColor(R.color.graph_1) });
+                getResources().getColor(R.color.graph_3),
+                getResources().getColor(R.color.graph_4),
+                getResources().getColor(R.color.graph_5),
+                getResources().getColor(R.color.graph_6),
+                getResources().getColor(R.color.graph_7) });
 
         graph.animateY(600);
         graph.setDrawSliceText(false);
