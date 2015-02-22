@@ -30,6 +30,8 @@ import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.LocalStorage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +61,12 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     private String currentSelectedItem = "";
     private View titleLayout;
     private View time_frame_cont;
+
+    private View bt_day, bt_week, bt_month;
+
+    private enum TIME_FRAME{
+        DAY, WEEK, MONTH;
+    }
 
     private class GraphItemDetails {
         public float total;
@@ -100,6 +108,10 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         titleLayout = layoutView.findViewById(R.id.title_layout);
         time_frame_cont = layoutView.findViewById(R.id.time_frame_filter_cont);
 
+        bt_day = layoutView.findViewById(R.id.day_toggle);
+        bt_week = layoutView.findViewById(R.id.week_toggle);
+        bt_month = layoutView.findViewById(R.id.month_toggle);
+
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +134,28 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             }
         });
 
+        bt_day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setGraphData(TIME_FRAME.DAY);
+
+            }
+        });
+        bt_week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setGraphData(TIME_FRAME.WEEK);
+
+            }
+        });
+        bt_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setGraphData(TIME_FRAME.MONTH);
+
+            }
+        });
+
         initGraph();
 
         return layoutView;
@@ -137,7 +171,37 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
     }
 
-    private void setGraphData(){
+    private void setGraphData(TIME_FRAME timeFrame){
+        Date currentDate = new Date();
+
+        Calendar c = Calendar.getInstance();
+        c = clearCalendar(c);
+
+        Date timeStart = null, timeEnd = null;
+
+        c.add(Calendar.DATE, -1);
+        timeStart = c.getTime();
+
+        c.add(Calendar.DATE, 2);
+        timeEnd = c.getTime();
+
+        if (timeFrame.equals(TIME_FRAME.WEEK)){
+            c = clearCalendar(c);
+            c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_WEEK));
+            timeStart = c.getTime();
+            c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_WEEK));
+            timeEnd = c.getTime();
+
+        }else if (timeFrame.equals(TIME_FRAME.MONTH)){
+            c = clearCalendar(c);
+            c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
+            timeStart = c.getTime();
+            c.set(Calendar.DATE, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+            timeEnd = c.getTime();
+        }
+
+        System.out.println(timeEnd + " - " + timeStart);
+
         ArrayList<Entry> yVals = new ArrayList<Entry>();
         ArrayList<String> xVals = new ArrayList<String>();
 
@@ -172,43 +236,48 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
             //add totals of all relevant attributes into table
             for (Food f: foods) {
-                for (String v: xVals){
-                    int index = f.getDataSet().getAttributeNames().indexOf(v);
+                if (f.getTimestamp().after(timeStart) && f.getTimestamp().before(timeEnd)){
+                    for (String v: xVals){
+                        int index = f.getDataSet().getAttributeNames().indexOf(v);
 
-                    if (graphInfo.containsKey(v)){
-                        GraphItemDetails d = graphInfo.get(v);
-                        d.items.add(f);
+                        if (graphInfo.containsKey(v)){
+                            GraphItemDetails d = graphInfo.get(v);
+                            d.items.add(f);
 
-                        try{
-                            d.total += Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
-                        }catch (Exception ex) {
-                            Log.d(TAG, ex.toString());
-                        }finally {
-                            graphInfo.put(v, d);
-                        }
+                            try{
+                                d.total += Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                            }catch (Exception ex) {
+                                Log.d(TAG, ex.toString());
+                            }finally {
+                                graphInfo.put(v, d);
+                            }
 
-                    }else{
-                        GraphItemDetails d = new GraphItemDetails();
-                        d.items.add(f);
-                        d.label = v;
-                        d.fid = f.getFid();
+                        }else{
+                            GraphItemDetails d = new GraphItemDetails();
+                            d.items.add(f);
+                            d.label = v;
+                            d.fid = f.getFid();
 
-                        CSVData data = f.getDataSet();
+                            CSVData data = f.getDataSet();
 
-                        List<String> attributes = data.getAttributeNames();
-                        int u = attributes.indexOf(v);
+                            List<String> attributes = data.getAttributeNames();
+                            int u = attributes.indexOf(v);
 
-                        d.unit = (u < 0 || u >= data.getAttributeUnits().size()) ? "" : data.getAttributeUnits().get(u);
+                            d.unit = (u < 0 || u >= data.getAttributeUnits().size()) ? "" : data.getAttributeUnits().get(u);
 
-                        try{
-                            d.total = Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
-                        }catch (Exception ex) {
-                            Log.d(TAG, ex.toString());
-                        }finally {
-                            graphInfo.put(v, d);
+                            try{
+                                d.total = Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                            }catch (Exception ex) {
+                                Log.d(TAG, ex.toString());
+                            }finally {
+                                graphInfo.put(v, d);
+                            }
                         }
                     }
+                }else {
+                    return;
                 }
+
             }
 
             int index = 0;
@@ -256,6 +325,17 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         ((MainActivity) getActivity()).showProductFragment();
     }
 
+    private Calendar clearCalendar(Calendar c){
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.clear(Calendar.MINUTE);
+        c.clear(Calendar.SECOND);
+        c.clear(Calendar.MILLISECOND);
+        c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
+
+        return c;
+    }
+
     @Override
     public void onResume() {
         LocalStorage localStorage = new LocalStorage(LocalStorage.STORAGE_KEY);
@@ -265,7 +345,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             foods = new ArrayList<>();
         }
 
-        setGraphData();
+        setGraphData(TIME_FRAME.DAY);
 
         super.onResume();
     }
@@ -325,6 +405,6 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     public void redrawGraph(){
         if (graph == null) return;
 
-        setGraphData();
+        setGraphData(TIME_FRAME.DAY);
     }
 }

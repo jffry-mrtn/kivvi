@@ -77,20 +77,20 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/week_toggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:layout_marginRight="10dp"
-                    android:text="Week"
-                    android:background="@drawable/enter_field" />
-
-                <Button
                     android:id="@+id/day_toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:text="Day"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/enter_field" />
+
+                <Button
+                    android:id="@+id/week_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="Week"
                     android:background="@drawable/enter_field" />
 
                 <Button
