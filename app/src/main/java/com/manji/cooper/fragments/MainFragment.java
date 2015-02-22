@@ -188,6 +188,11 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         homeTitleTextView.setText(getResources().getString(R.string.overview_day));
 
+        // Set default for day
+        bt_day.setBackground(getResources().getDrawable(R.drawable.primary_button));
+        bt_week.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
+        bt_month.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
+
         if (timeFrame.equals(TIME_FRAME.WEEK)){
             c = clearCalendar(c);
             c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_WEEK));
@@ -197,7 +202,9 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
             homeTitleTextView.setText(getResources().getString(R.string.overview_week));
 
-
+            bt_week.setBackground(getResources().getDrawable(R.drawable.primary_button));
+            bt_month.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
+            bt_day.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
         }else if (timeFrame.equals(TIME_FRAME.MONTH)){
             c = clearCalendar(c);
             c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -207,6 +214,9 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
             homeTitleTextView.setText(getResources().getString(R.string.overview_month));
 
+            bt_month.setBackground(getResources().getDrawable(R.drawable.primary_button));
+            bt_week.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
+            bt_day.setBackground(getResources().getDrawable(R.drawable.time_button_selector));
 
         }
 
