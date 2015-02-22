@@ -83,7 +83,7 @@
                     android:layout_weight="0.3"
                     android:text="Day"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/enter_field" />
+                    android:background="@drawable/time_button_selector" />
 
                 <Button
                     android:id="@+id/week_toggle"
@@ -91,7 +91,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
                     android:text="Week"
-                    android:background="@drawable/enter_field" />
+                    android:background="@drawable/time_button_selector" />
 
                 <Button
                     android:id="@+id/month_toggle"
@@ -100,7 +100,7 @@
                     android:layout_weight="0.3"
                     android:layout_marginLeft="10dp"
                     android:text="Month"
-                    android:background="@drawable/enter_field" />
+                    android:background="@drawable/time_button_selector" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

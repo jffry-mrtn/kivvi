@@ -182,6 +182,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         c.add(Calendar.DATE, 2);
         timeEnd = c.getTime();
 
+        homeTitleTextView.setText("Your nutritional overview today");
+
         if (timeFrame.equals(TIME_FRAME.WEEK)){
             c = clearCalendar(c);
             c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_WEEK));
@@ -189,12 +191,17 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_WEEK));
             timeEnd = c.getTime();
 
+            homeTitleTextView.setText("Your nutritional overview this week");
+
         }else if (timeFrame.equals(TIME_FRAME.MONTH)){
             c = clearCalendar(c);
             c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
             timeStart = c.getTime();
             c.set(Calendar.DATE, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
             timeEnd = c.getTime();
+
+            homeTitleTextView.setText("Your nutritional overview this month");
+
         }
 
         System.out.println(timeEnd + " - " + timeStart);
@@ -214,7 +221,9 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             time_frame_cont.setVisibility(View.GONE);
 
         } else {
-            homeTitleTextView.setText("Nutritional Overview");
+            homeTitleTextView.setVisibility(View.VISIBLE);
+            homeTitleTextView.setTextSize(18);
+
             time_frame_cont.setVisibility(View.VISIBLE);
 
             HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
