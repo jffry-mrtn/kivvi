@@ -17,6 +17,26 @@
     <RelativeLayout
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
+        android:id="@+id/no_items_cont"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#00FFFFFF"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_no_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_margin="10dp"
+            android:textSize="14dp"
+            android:text="Start adding the food items you consume so Kivvi can track your nutritional intake!"
+            android:gravity="center"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
         android:id="@+id/selected_item_detail_cont"
         android:layout_width="match_parent"
         android:layout_height="70dp"

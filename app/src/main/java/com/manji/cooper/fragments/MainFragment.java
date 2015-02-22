@@ -62,6 +62,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     private  View selected_item_cont;
     private TextView tv_details;
     private Button bt_more;
+    private View no_items_cont;
 
     private String currentSelectedItem = "";
 
@@ -101,6 +102,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         tv_details = (TextView)layoutView.findViewById(R.id.tv_selected_item_detail);
         selected_item_cont = layoutView.findViewById(R.id.selected_item_detail_cont);
         bt_more = (Button)layoutView.findViewById(R.id.bt_more_info);
+        no_items_cont = layoutView.findViewById(R.id.no_items_cont);
 
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,74 +142,83 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     }
 
     private void setGraphData(){
-        if (foods == null || foods.size() == 0) return;
-
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
-
-        graphInfo = new HashMap<>();
-
-        //the relevant attributes
         ArrayList<String> xVals = new ArrayList<String>();
 
-        xVals.add("protein");
-        xVals.add("carbohydrate");
-        xVals.add("total sugar");
-        xVals.add("total fat");
-        xVals.add("cholesterol");
-        xVals.add("total dietary fibre");
-        xVals.add("saturated fat");
+        if (foods == null || foods.size() == 0) {
 
-        //add totals of all relevant attributes into table
-        for (Food f: foods) {
-            for (String v: xVals){
-                int index = f.getDataSet().getAttributeNames().indexOf(v);
+            yVals.add(new Entry(1.0f, 0));
+            xVals.add("Food you haven't logged yet");
 
-                if (graphInfo.containsKey(v)){
-                    GraphItemDetails d = graphInfo.get(v);
-                    d.items.add(f);
+            graph.setUsePercentValues(true);
+            no_items_cont.setVisibility(View.VISIBLE);
 
-                    try{
-                        d.total += Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
-                    }catch (Exception ex) {
-                        Log.d(TAG, ex.toString());
-                    }finally {
-                        graphInfo.put(v, d);
-                    }
+        }else{
+            HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
 
-                }else{
-                    GraphItemDetails d = new GraphItemDetails();
-                    d.items.add(f);
-                    d.label = v;
-                    d.fid = f.getFid();
+            graphInfo = new HashMap<>();
 
-                    CSVData data = f.getDataSet();
+            //the relevant attributes
 
-                    List<String> attributes = data.getAttributeNames();
-                    int u = attributes.indexOf(v);
+            xVals.add("protein");
+            xVals.add("carbohydrate");
+            xVals.add("total sugar");
+            xVals.add("total fat");
+            xVals.add("cholesterol");
+            xVals.add("total dietary fibre");
+            xVals.add("saturated fat");
 
-                    d.unit = (u < 0 || u >= data.getAttributeUnits().size()) ? "" : data.getAttributeUnits().get(u);
+            //add totals of all relevant attributes into table
+            for (Food f: foods) {
+                for (String v: xVals){
+                    int index = f.getDataSet().getAttributeNames().indexOf(v);
 
-                    try{
-                        d.total = Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
-                    }catch (Exception ex) {
-                        Log.d(TAG, ex.toString());
-                    }finally {
-                        graphInfo.put(v, d);
+                    if (graphInfo.containsKey(v)){
+                        GraphItemDetails d = graphInfo.get(v);
+                        d.items.add(f);
+
+                        try{
+                            d.total += Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                        }catch (Exception ex) {
+                            Log.d(TAG, ex.toString());
+                        }finally {
+                            graphInfo.put(v, d);
+                        }
+
+                    }else{
+                        GraphItemDetails d = new GraphItemDetails();
+                        d.items.add(f);
+                        d.label = v;
+                        d.fid = f.getFid();
+
+                        CSVData data = f.getDataSet();
+
+                        List<String> attributes = data.getAttributeNames();
+                        int u = attributes.indexOf(v);
+
+                        d.unit = (u < 0 || u >= data.getAttributeUnits().size()) ? "" : data.getAttributeUnits().get(u);
+
+                        try{
+                            d.total = Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                        }catch (Exception ex) {
+                            Log.d(TAG, ex.toString());
+                        }finally {
+                            graphInfo.put(v, d);
+                        }
                     }
                 }
             }
-        }
 
-        int index = 0;
-        for (String t: graphInfo.keySet()){
-            //Only include non-zero totals in graph
-            if (graphInfo.get(t).total == 0){
-                xVals.remove(t);
-            }else{
-                graphInfo.get(t).xIndex = index;
-                yVals.add(new Entry(graphInfo.get(t).total, index));
-                index++;
+            int index = 0;
+            for (String t: graphInfo.keySet()){
+                //Only include non-zero totals in graph
+                if (graphInfo.get(t).total == 0){
+                    xVals.remove(t);
+                }else{
+                    graphInfo.get(t).xIndex = index;
+                    yVals.add(new Entry(graphInfo.get(t).total, index));
+                    index++;
+                }
             }
         }
 
@@ -215,13 +226,13 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         // add a lot of colors
         dataSet.setColors(new int[] {
-                getResources().getColor(R.color.graph_1),
-                getResources().getColor(R.color.graph_2),
-                getResources().getColor(R.color.graph_3),
-                getResources().getColor(R.color.graph_4),
-                getResources().getColor(R.color.graph_5),
+                getResources().getColor(R.color.graph_7),
                 getResources().getColor(R.color.graph_6),
-                getResources().getColor(R.color.graph_7) });
+                getResources().getColor(R.color.graph_5),
+                getResources().getColor(R.color.graph_4),
+                getResources().getColor(R.color.graph_3),
+                getResources().getColor(R.color.graph_2),
+                getResources().getColor(R.color.graph_1) });
 
         graph.animateY(600);
         graph.setDrawSliceText(false);
@@ -259,7 +270,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
     @Override
     public void onValueSelected(Entry entry, int i) {
-        if (graphInfo == null) return;
+        if (graphInfo == null || foods == null || foods.size() == 0) return;
+
         String res = "";
 
         ArrayList<String> details = new ArrayList<>();
@@ -268,7 +280,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             if (graphInfo.get(g).xIndex == entry.getXIndex()){
                 currentSelectedItem = g;
 
-                res = String.format("%.01f%s from %d items\n", entry.getVal(), graphInfo.get(g).unit, graphInfo.get(g).items.size());
+                res = String.format("%.01f %s from %d items\n", entry.getVal(), graphInfo.get(g).unit, graphInfo.get(g).items.size());
 
                 for (Food f: graphInfo.get(g).items) {
                     CSVData data = f.getDataSet();
