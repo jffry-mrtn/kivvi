@@ -130,8 +130,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         graph.setDescription("");
         graph.setOnChartValueSelectedListener(this);
-//
-//        graph.setRotationEnabled(false);
+
+        graph.setRotationEnabled(false);
 
     }
 
