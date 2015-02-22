@@ -211,7 +211,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
 
         if (historyFragment.isVisible()) {
             fm.beginTransaction().replace(R.id.frame, mainFragment).commit();
-            setToolbarTitle("Overview");
+            setToolbarTitle("Kivvi");
             return;
         }
 
