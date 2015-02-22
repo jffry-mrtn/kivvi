@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import com.manji.cooper.adapter.DrawerAdapter;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.ItemInfo;
+import com.manji.cooper.fragments.DetailFragment;
 import com.manji.cooper.fragments.MainFragment;
 import com.manji.cooper.fragments.NutritionFragment;
 import com.manji.cooper.fragments.ProductFragment;
@@ -31,6 +32,7 @@ import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.Utility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -43,6 +45,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     private ScannerFragment scannerFragment;
     private ProductFragment productFragment;
     private NutritionFragment nutritionFragment;
+    private DetailFragment detailFragment;
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private RelativeLayout drawerView;
@@ -129,6 +132,7 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
         scannerFragment = new ScannerFragment();
         productFragment = new ProductFragment();
         nutritionFragment = new NutritionFragment();
+        detailFragment = new DetailFragment();
 
         // Load initial fragment
         FragmentManager fm = getFragmentManager();
@@ -228,6 +232,15 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     public void showProductFragment() {
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame, productFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showDetailFragment(String currentSelectedItem, ArrayList<String> details) {
+        detailFragment.setData(currentSelectedItem, details);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame, detailFragment)
                 .addToBackStack(null)
                 .commit();
     }
