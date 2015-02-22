@@ -93,7 +93,10 @@ public class NutritionFragment extends Fragment {
     }
 
     private void saveFoodAndReset() {
-        saveFood();
+        if (isEditable) {
+            saveFood();
+        }
+        
         ((MainActivity) getActivity()).resetFragments();
     }
 
