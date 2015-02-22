@@ -110,8 +110,14 @@ public class NutritionFragment extends Fragment {
 
     private void generateNutritionViews() {
         for (String attrName : Utility.getFormattedAttributeNames(food.getKey())) {
-            if (!attrName.contains("food name")) {
-                String attrValue = food.getDataSet().getValue(food.getMealTitle(), attrName.substring(0, attrName.indexOf(" (")));
+            if (!attrName.contains("FOOD NAME")) {
+                String attrValue;
+
+                if (attrName.contains(" (")) {
+                    attrValue = food.getDataSet().getValue(food.getMealTitle(), attrName.substring(0, attrName.indexOf(" (")).toLowerCase());
+                } else {
+                    attrValue = food.getDataSet().getValue(food.getMealTitle(), attrName.toLowerCase());
+                }
 
                 TextView attributeLabelTextView = new TextView(context);
                 TextView attributeValueTextView = new TextView(context);
@@ -125,7 +131,6 @@ public class NutritionFragment extends Fragment {
                 // Attribute Label
                 attributeLabelTextView.setText(attrName);
                 attributeLabelTextView.setTextColor(context.getResources().getColor(R.color.primary));
-                attributeLabelTextView.setAllCaps(true);
                 attributeLabelTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
                 attributeLabelTextView.setLayoutParams(lpLabel);
 
