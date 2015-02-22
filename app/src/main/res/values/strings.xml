@@ -35,7 +35,7 @@
     <string name="dashboard_title">Today you have eaten</string>
     <string name="calories">calories</string>
     <string name="scan_barcode">Scan Barcode</string>
-    <string name="enter_product">Enter Product</string>
+    <string name="enter_product">Search for a food item</string>
     <string name="history_label">Recently Scanned Food</string>
     <string name="save_product">Save Product</string>
     <string name="cancel">Cancel</string>
@@ -43,7 +43,7 @@
     <!--Outpan API key-->
     <string name="outpan_api_key">0651caccf5f32e7858620cf7778e817b</string>
     <string name="get_nutrition">Get Nutrition</string>
-    <string name="product_search_hint">Enter a product to view results</string>
+    <string name="product_search_hint">Start typing to view results</string>
     <string name="your_meal">Your Meal</string>
     <string name="done">Done</string>
 
