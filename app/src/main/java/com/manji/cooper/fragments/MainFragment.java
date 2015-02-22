@@ -61,12 +61,15 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     private Handler hideDetailsHandler;
     private  View selected_item_cont;
     private TextView tv_details;
+    private Button bt_more;
 
+    private String currentSelectedItem = "";
 
     private class GraphItemDetails {
         public float total;
         public String label;
-        private String unit;
+        public String unit;
+        public ArrayList<String> details;
         public int fid;
         public ArrayList<Food> items;
         public int xIndex;
@@ -76,6 +79,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             xIndex = 0;
             label = "";
             unit = "";
+            details = new ArrayList<>();
             fid = 0;
             items = new ArrayList<>();
         }
@@ -96,6 +100,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         tv_details = (TextView)layoutView.findViewById(R.id.tv_selected_item_detail);
         selected_item_cont = layoutView.findViewById(R.id.selected_item_detail_cont);
+        bt_more = (Button)layoutView.findViewById(R.id.bt_more_info);
 
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +113,14 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             @Override
             public void onClick(View v) {
                 showEnterProduct();
+            }
+        });
+
+        bt_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, graphInfo.get(currentSelectedItem).details.toString());
+
             }
         });
 
@@ -253,6 +266,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
 
         for (String g: graphInfo.keySet()){
             if (graphInfo.get(g).xIndex == entry.getXIndex()){
+                currentSelectedItem = g;
 
                 res = String.format("%.01f%s from %d items\n", entry.getVal(), graphInfo.get(g).unit, graphInfo.get(g).items.size());
 
@@ -271,9 +285,9 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
                     }
 
                     details.add(String.format("%.01f%s of '%s'\n", weight, graphInfo.get(g).unit, f.getMealTitle()));
-
                 }
-                Log.d(TAG, details.toString());
+
+                graphInfo.get(g).details = details;
                 break;
 
             }
