@@ -9,6 +9,7 @@ import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Constants;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.LocalStorage;
+import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,6 +65,8 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     private View time_frame_cont;
 
     private View bt_day, bt_week, bt_month;
+
+    private boolean detailsVisible = false;
 
     private enum TIME_FRAME{
         DAY, WEEK, MONTH;
@@ -399,16 +403,21 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         }
 
         tv_details.setText(res);
-        chartDetailView.setVisibility(View.VISIBLE);
-        titleLayout.setVisibility(View.GONE);
+
+        if(!detailsVisible){
+            chartDetailView.setVisibility(View.VISIBLE);
+            chartDetailView.startAnimation( AnimationUtils.loadAnimation(Utility.activity, R.anim.slide_down));
+            detailsVisible = true;
+        }
 
     }
 
     @Override
     public void onNothingSelected() {
         chartDetailView.setVisibility(View.GONE);
-        titleLayout.setVisibility(View.VISIBLE);
+        chartDetailView.startAnimation(AnimationUtils.loadAnimation(Utility.activity, R.anim.slide_up));
 
+        detailsVisible = false;
     }
 
     public void redrawGraph(){

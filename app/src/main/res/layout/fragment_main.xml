@@ -12,39 +12,6 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_alignParentTop="true"
-            android:id="@+id/selected_item_detail_cont"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:background="@android:color/white"
-            android:visibility="gone">
-            <TextView
-                android:id="@+id/tv_selected_item_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:padding="5dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:layout_centerVertical="true"/>
-            <Button
-                android:id="@+id/bt_more_info"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
-                android:padding="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_alignParentRight="true"
-                android:text="@string/more"
-                android:textSize="12sp"
-                android:layout_centerVertical="true"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_border"/>
-        </RelativeLayout>
-        <RelativeLayout
             android:id="@+id/title_layout"
             android:layout_width="match_parent"
             android:layout_height="120dp">
@@ -102,6 +69,39 @@
                     android:text="Month"
                     android:background="@drawable/time_button_selector" />
             </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_alignParentTop="true"
+            android:id="@+id/selected_item_detail_cont"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:background="@android:color/white"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_selected_item_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"/>
+            <Button
+                android:id="@+id/bt_more_info"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:text="@string/more"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_border"/>
         </RelativeLayout>
     </RelativeLayout>
 
