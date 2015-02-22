@@ -50,10 +50,11 @@
     <string name="product_search_hint">Start typing to view results</string>
     <string name="your_meal">Your Meal</string>
     <string name="done">Done</string>
+    <string name="save_item">Save</string>
 
     <!--Home screen-->
     <string name="no_data_intructional_copy">Start adding the food items you consume so Kivvi can track your nutritional intake!</string>
-    <string name="empty_chart_text">Food you haven't logged yet</string>
+    <string name="empty_chart_text">Food you haven\'t logged yet</string>
     <string name="overview_day">You nutritional overview today</string>
     <string name="overview_week">You nutritional overview this week</string>
     <string name="overview_month">You nutritional overview this month</string>

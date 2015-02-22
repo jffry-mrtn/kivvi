@@ -201,7 +201,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             c.set(Calendar.DATE, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
             timeEnd = c.getTime();
 
-            homeTitleTextView.setText(getResources().getString(R.string.overview_week));
+            homeTitleTextView.setText(getResources().getString(R.string.overview_month));
 
 
         }
