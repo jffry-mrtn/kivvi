@@ -22,14 +22,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Constants;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.LocalStorage;
-import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,12 +51,13 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
     private PieChart graph;
 
     private Handler hideDetailsHandler;
-    private  View selected_item_cont;
+    private  View chartDetailView;
     private TextView tv_details;
     private Button bt_more;
-    private View no_items_cont;
+    private TextView homeTitleTextView;
 
     private String currentSelectedItem = "";
+    private View titleLayout;
 
     private class GraphItemDetails {
         public float total;
@@ -94,9 +93,10 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         fabEnterProduct = (FloatingActionButton) layoutView.findViewById(R.id.enter_product);
 
         tv_details = (TextView)layoutView.findViewById(R.id.tv_selected_item_detail);
-        selected_item_cont = layoutView.findViewById(R.id.selected_item_detail_cont);
+        chartDetailView = layoutView.findViewById(R.id.selected_item_detail_cont);
         bt_more = (Button)layoutView.findViewById(R.id.bt_more_info);
-        no_items_cont = layoutView.findViewById(R.id.no_items_cont);
+        homeTitleTextView = (TextView) layoutView.findViewById(R.id.home_title);
+        titleLayout = layoutView.findViewById(R.id.title_layout);
 
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,9 +145,10 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             xVals.add("Food you haven't logged yet");
 
             graph.setUsePercentValues(true);
-            no_items_cont.setVisibility(View.VISIBLE);
+            homeTitleTextView.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
+            homeTitleTextView.setText("Nutritional Overview");
             HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
 
             graphInfo = new HashMap<>();
@@ -301,14 +302,16 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         }
 
         tv_details.setText(res);
-        selected_item_cont.setVisibility(View.VISIBLE);
+        chartDetailView.setVisibility(View.VISIBLE);
+        titleLayout.setVisibility(View.GONE);
 
     }
 
     @Override
     public void onNothingSelected() {
         Log.d(TAG, "Nothing");
-        selected_item_cont.setVisibility(View.GONE);
+        chartDetailView.setVisibility(View.GONE);
+        titleLayout.setVisibility(View.VISIBLE);
 
     }
 
