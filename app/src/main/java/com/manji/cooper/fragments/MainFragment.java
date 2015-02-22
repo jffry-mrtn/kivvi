@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.mikephil.charting.components.Legend;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
@@ -41,10 +43,10 @@ public class MainFragment extends Fragment {
     private View layoutView;
     private ActionMode actionMode;
 
-    private ListView historyListView;
-    private ImageButton barcodeButton;
-    private Button enterProductButton;
-    private TextView caloriesTextView;
+    private FloatingActionsMenu fabMenu;
+    private FloatingActionButton fabScanBarcode;
+    private FloatingActionButton fabEnterProduct;
+
     private ArrayList<Food> foods;
 
     private PieChart graph;
@@ -58,20 +60,18 @@ public class MainFragment extends Fragment {
         layoutView = inflater.inflate(R.layout.fragment_main, container, false);
         context = getActivity().getApplicationContext();
 
-        //caloriesTextView = (TextView) layoutView.findViewById(R.id.dashboard_calories);
+        fabMenu = (FloatingActionsMenu) layoutView.findViewById(R.id.fab);
+        fabScanBarcode = (FloatingActionButton) layoutView.findViewById(R.id.scan_barcode);
+        fabEnterProduct = (FloatingActionButton) layoutView.findViewById(R.id.enter_product);
 
-        barcodeButton = (ImageButton) layoutView.findViewById(R.id.scan_barcode_button);
-        enterProductButton = (Button) layoutView.findViewById(R.id.enter_product_button);
-        historyListView = (ListView) layoutView.findViewById(R.id.history_listview);
-
-        barcodeButton.setOnClickListener(new View.OnClickListener() {
+        fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 showCamera();
             }
         });
 
-        enterProductButton.setOnClickListener(new View.OnClickListener() {
+        fabEnterProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEnterProduct();
@@ -146,27 +146,14 @@ public class MainFragment extends Fragment {
         PieDataSet dataSet = new PieDataSet(yVals, "");
 
         // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
+        dataSet.setColors(new int[] {
+                getResources().getColor(R.color.graph_1),
+                getResources().getColor(R.color.graph_2),
+                getResources().getColor(R.color.graph_3),
+                getResources().getColor(R.color.graph_4),
+                getResources().getColor(R.color.graph_5),
+                getResources().getColor(R.color.graph_6),
+                getResources().getColor(R.color.graph_7) });
 
         graph.animateY(800);
         graph.setVisibility(View.VISIBLE);
@@ -202,74 +189,4 @@ public class MainFragment extends Fragment {
 
         super.onResume();
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    /** Search **/
-    public void search(CharSequence query) {
-        if (query.length() > 0) {
-//            mainAdapter.getFilter().filter(query);
-        }
-    }
-
-    public void clearSearchFilter() {
-//        mainAdapter.getFilter().filter("");
-
-//        mainAdapter = new MainAdapter(context);
-//        mainListView.setAdapter(mainAdapter);
-//        mainAdapter.notifyDataSetChanged();
-    }
-
-    public void clearItemSelection() {
-//        mainAdapter.notifyDataSetChanged();
-    }
-
-    private class ActionModeCallback implements ListView.MultiChoiceModeListener {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            MenuInflater inflater = mode.getMenuInflater();
-//            inflater.inflate(R.menu.main_context_menu, menu);
-            mode.setTitle(getResources().getString(R.string.select_elements));
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            actionMode = mode;
-            switch (item.getItemId()) {
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-        }
-
-        @Override
-        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-            final int numSelected = historyListView.getCheckedItemCount();
-
-            switch (numSelected) {
-                case 0:
-                    actionMode.setSubtitle(null);
-                    break;
-                case 1:
-                    actionMode.setSubtitle(getResources().getString(R.string.one_item_selected));
-                    break;
-                default:
-                    actionMode.setSubtitle(String.format(getResources().getString(R.string.more_items_selected), numSelected));
-                    break;
-            }
-        }
-    };
-
 }

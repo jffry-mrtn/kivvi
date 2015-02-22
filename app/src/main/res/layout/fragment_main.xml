@@ -13,107 +13,40 @@
         android:paddingLeft="36dp"
         android:paddingRight="36dp">
 
-        <!-- Dashboard -->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/dashboard"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_marginTop="36dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:padding="16dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/dashboard">-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:gravity="center"-->
-                <!--android:fontFamily="sans-serif-condensed"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/dashboard_title"-->
-                <!--android:textSize="19sp"-->
-                <!--android:textColor="@color/dark_grey"-->
-                <!--android:textAllCaps="true" />-->
-            <!--<TextView-->
-                <!--android:id="@+id/dashboard_calories"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:gravity="center"-->
-                <!--android:fontFamily="sans-serif-condensed"-->
-                <!--android:textStyle="bold"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="70sp"-->
-                <!--android:text="281"-->
-                <!--android:textAllCaps="true" />-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:gravity="center"-->
-                <!--android:fontFamily="sans-serif-condensed"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="@string/calories"-->
-                <!--android:textSize="19sp"-->
-                <!--android:textColor="@color/dark_grey"-->
-                <!--android:textAllCaps="true" />-->
-        <!--</LinearLayout>-->
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pc_chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
         </com.github.mikephil.charting.charts.PieChart>
 
-    <LinearLayout
-        android:visibility="gone"
-        android:orientation="horizontal"
-        android:layout_marginBottom="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/enter_field">
-
-        <Button
-            android:id="@+id/enter_product_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:padding="10dp"
-            android:hint="@string/enter_product"
-            android:textColor="@color/dark_grey"
-            android:background="@drawable/action_button" />
-
-        <ImageButton
-            android:id="@+id/scan_barcode_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:src="@drawable/ic_camera"
-            android:background="@drawable/action_button" />
-    </LinearLayout>
-
-        <!-- History -->
         <LinearLayout
             android:visibility="gone"
-            android:id="@+id/history"
+            android:orientation="horizontal"
+            android:layout_marginBottom="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/dark_grey"
-                android:textStyle="bold"
-                android:text="@string/history_label" />
+            android:background="@drawable/enter_field">
 
-            <ListView
-                android:id="@+id/history_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+            <Button
+                android:id="@+id/enter_product_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:padding="10dp"
+                android:hint="@string/enter_product"
+                android:textColor="@color/dark_grey"
+                android:background="@drawable/action_button" />
+
+            <ImageButton
+                android:id="@+id/scan_barcode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:src="@drawable/ic_camera"
+                android:background="@drawable/action_button" />
         </LinearLayout>
     </LinearLayout>
+
+    <include layout="@layout/fab" />
 
 </RelativeLayout>

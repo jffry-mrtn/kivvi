@@ -4,6 +4,14 @@
     <color name="dark_grey">#ff505050</color>
     <color name="light_grey">#E3E3E3</color>
 
+    <color name="graph_1">#D32F2F</color>
+    <color name="graph_2">#E64A19</color>
+    <color name="graph_3">#673AB7</color>
+    <color name="graph_4">#303F9F</color>
+    <color name="graph_5">#1565C0</color>
+    <color name="graph_6">#26A69A</color>
+    <color name="graph_7">#4CAF50</color>
+
     <color name="light_primary">#26A69A</color>
     <color name="primary">#009688</color>
     <color name="dark_primary">#00796B</color>
