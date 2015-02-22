@@ -25,7 +25,7 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return content.size();
+        return (content == null) ? 0: content.size();
     }
 
     @Override
