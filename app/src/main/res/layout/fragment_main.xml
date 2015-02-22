@@ -51,15 +51,53 @@
         android:layout_height="match_parent"
         android:background="@drawable/enter_field">
 
-        <Button
-            android:id="@+id/enter_product_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:padding="10dp"
-            android:hint="@string/enter_product"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:text="Your Nutritional Pie"
+            android:textSize="20sp"
             android:textColor="@color/dark_grey"
-            android:background="@drawable/action_button" />
+            android:textAllCaps="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/week_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:layout_marginRight="10dp"
+                android:text="Week"
+                android:background="@drawable/enter_field" />
+
+            <Button
+                android:id="@+id/day_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="Day"
+                android:background="@drawable/enter_field" />
+
+            <Button
+                android:id="@+id/month_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:layout_marginLeft="10dp"
+                android:text="Month"
+                android:background="@drawable/enter_field" />
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/scan_barcode_button"
