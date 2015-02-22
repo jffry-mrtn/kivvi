@@ -11,7 +11,6 @@
     fab:fab_addButtonColorNormal="@color/primary"
     fab:fab_addButtonColorPressed="@color/dark_primary"
     fab:fab_addButtonPlusIconColor="@android:color/white"
-    fab:fab_labelStyle="@style/fab_labels_style"
     android:layout_marginBottom="12dp"
     android:layout_marginRight="16dp"
     android:layout_marginEnd="16dp">
