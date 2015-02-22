@@ -93,7 +93,10 @@ public class NutritionFragment extends Fragment {
     }
 
     private void saveFoodAndReset() {
-        saveFood();
+        if (isEditable) {
+            saveFood();
+        }
+
         ((MainActivity) getActivity()).resetFragments();
     }
 
@@ -130,6 +133,22 @@ public class NutritionFragment extends Fragment {
         }
     }
 
+    private void updateNutritionValues(float factor) {
+        if (!nutritionTextViewList.isEmpty() && !nutritionValueList.isEmpty()) {
+            int newWeight = (int) (foodWeight * factor);
+            quantityLabel.setText(Integer.toString(newWeight));
+            quantitySeekbar.setProgress(newWeight);
+
+            for (int i = 0; i < nutritionTextViewList.size(); i++) {
+                float value = nutritionValueList.get(i);
+                TextView tv = nutritionTextViewList.get(i);
+
+                float newValue = value * factor;
+                tv.setText(Float.toString(newValue));
+            }
+        }
+    }
+
     private void initData() {
         foodWeight = Integer.parseInt(food.getDataSet().getValue(food.getMealTitle(), "weight"));
 
@@ -140,6 +159,11 @@ public class NutritionFragment extends Fragment {
 
         foodTitleTextView.setText(food.getMealTitle().substring(0, 1).toUpperCase() + food.getMealTitle().substring(1));
         generateNutritionViews();
+
+        if (!isEditable) {
+            // Means we are in history mode
+            updateNutritionValues(food.getFactor());
+        }
     }
 
     private void generateNutritionViews() {
