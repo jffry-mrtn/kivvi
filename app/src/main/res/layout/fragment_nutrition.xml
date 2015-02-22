@@ -72,13 +72,13 @@
             android:orientation="vertical" />
 
         <Button
-            android:id="@+id/save_product"
+            android:id="@+id/done_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:padding="16dp"
-            android:text="@string/save_product"
+            android:text="@string/done"
             android:textColor="@android:color/white"
             android:background="@drawable/primary_button" />
     </LinearLayout>

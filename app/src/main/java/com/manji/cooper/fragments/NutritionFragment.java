@@ -19,7 +19,9 @@ import com.google.gson.Gson;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.custom.CSVData;
+import com.manji.cooper.model.Constants;
 import com.manji.cooper.model.Food;
+import com.manji.cooper.utils.LocalStorage;
 import com.manji.cooper.utils.Utility;
 
 import java.text.NumberFormat;
@@ -61,12 +63,12 @@ public class NutritionFragment extends Fragment {
         quantityLabel = (TextView) layoutView.findViewById(R.id.quantity_label);
         quantitySeekbar = (SeekBar) layoutView.findViewById(R.id.quantity_seekbar);
 
-        doneButton = (Button) layoutView.findViewById(R.id.save_product);
+        doneButton = (Button) layoutView.findViewById(R.id.done_product);
         
         quantitySeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                quantityLabel.setText(Integer.toString(progress) + " kg");
+                quantityLabel.setText(Integer.toString(progress) + " g");
                 updateNutritionValues(progress);
             }
 
@@ -84,13 +86,28 @@ public class NutritionFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).resetFragments();
+                saveFoodAndReset();
             }
         });
 
         initData();
         
         return layoutView;
+    }
+
+    private void saveFoodAndReset() {
+        LocalStorage localStorage = new LocalStorage(LocalStorage.STORAGE_KEY);
+
+        ArrayList<Food> foods = (ArrayList<Food>) localStorage.retrieveObject(Constants.FOOD_ARRAYLIST_CACHE);
+
+        if (foods == null) {
+            foods = new ArrayList<>();
+        }
+
+        foods.add(food);
+
+        localStorage.serializeAndStore(Constants.FOOD_ARRAYLIST_CACHE, foods);
+        ((MainActivity) getActivity()).resetFragments();
     }
 
     private void updateNutritionValues(int newWeight) {
@@ -118,7 +135,7 @@ public class NutritionFragment extends Fragment {
 
     private void generateNutritionViews() {
         for (String attrName : Utility.getFormattedAttributeNames(food.getKey())) {
-            if ((!attrName.contains("FOOD NAME")) && (!attrName.contains("WEIGHT"))) {
+            if ((!attrName.contains("FOOD NAME"))) {
                 String attrValue;
 
                 if (attrName.contains(" (")) {

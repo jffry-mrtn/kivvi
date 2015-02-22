@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,10 @@ import android.widget.TextView;
 import com.manji.cooper.MainActivity;
 import com.manji.cooper.R;
 import com.manji.cooper.model.Constants;
+import com.manji.cooper.model.Food;
+import com.manji.cooper.utils.LocalStorage;
+
+import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
 
@@ -30,6 +35,7 @@ public class MainFragment extends Fragment {
     private ImageButton barcodeButton;
     private Button enterProductButton;
     private TextView caloriesTextView;
+    private ArrayList<Food> foods;
 
 
     public MainFragment() {
@@ -73,6 +79,13 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onResume() {
+        LocalStorage localStorage = new LocalStorage(LocalStorage.STORAGE_KEY);
+        foods = (ArrayList<Food>) localStorage.retrieveObject(Constants.FOOD_ARRAYLIST_CACHE);
+
+        if (foods == null) {
+            foods = new ArrayList<>();
+        }
+
         super.onResume();
     }
 

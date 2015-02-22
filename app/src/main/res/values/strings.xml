@@ -45,5 +45,6 @@
     <string name="get_nutrition">Get Nutrition</string>
     <string name="product_search_hint">Enter a product to view results</string>
     <string name="your_meal">Your Meal</string>
+    <string name="done">Done</string>
 
 </resources>

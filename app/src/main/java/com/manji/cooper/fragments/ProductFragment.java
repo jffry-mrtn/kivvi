@@ -124,10 +124,9 @@ public class ProductFragment extends Fragment {
             String mealTitle = productAdapter.getItem(position);
 
             int csvKey = productAdapter.getFilteredHashMap().get(mealTitle).csvKey;
-            ArrayList<String> values = productAdapter.getFilteredHashMap().get(mealTitle).values;
             CSVData dataSet = DataManager.getInstance().getData().get(csvKey);
 
-            Food food = new Food(csvKey, mealTitle, values, dataSet);
+            Food food = new Food(csvKey, mealTitle, dataSet);
             ((MainActivity) getActivity()).showNutritionFragment(food);
         }
     }

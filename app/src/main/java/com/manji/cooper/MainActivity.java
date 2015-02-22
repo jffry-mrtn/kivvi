@@ -233,6 +233,9 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
     }
 
     public void resetFragments() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame, mainFragment)
+                .commit();
     }
 
     private class DrawerClickListener implements ListView.OnItemClickListener {
@@ -245,8 +248,6 @@ public class MainActivity extends ActionBarActivity implements OnDataRetrievedLi
                     fm.beginTransaction().replace(R.id.frame, mainFragment).commit();
                     setToolbarTitle("");
                 }
-            } else if (i == 1) {
-            } else if (i == 2) {
             }
 
             // Close the drawer
