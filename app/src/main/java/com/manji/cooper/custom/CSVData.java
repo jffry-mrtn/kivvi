@@ -23,7 +23,6 @@ public class CSVData implements Serializable{
 
     public CSVData(Context c, HashMap h){
         context = c;
-
         data = h;
     }
 
