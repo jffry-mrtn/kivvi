@@ -64,6 +64,7 @@
 
     <!--Buttons-->
     <string name="try_again">Try again</string>
+    <string name="more">More</string>
 
 
 </resources>

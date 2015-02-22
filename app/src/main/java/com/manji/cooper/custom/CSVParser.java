@@ -1,5 +1,8 @@
 package com.manji.cooper.custom;
 
+import android.util.Log;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import java.io.Serializable;
@@ -49,8 +52,25 @@ public class CSVParser implements Serializable{
             String key = parseKey(line);
             ArrayList<String> entries = parseEntries(line, key);
 
-            if (key != null)
+            if (key != null && entries != null){
+                for (int e=0; e<entries.size(); e++){
+                    if (e >= attributesUnits.size())
+                        continue;
+
+                    if (attributesUnits.get(e).equals("mg")){
+                        try{
+                            float val = NumberFormat.getInstance().parse(entries.get(e).replaceAll("[a-zA-Z]", "")).floatValue();
+                            entries.set(e, (val/1000.0)+"");
+                            attributesUnits.set(e, "g");
+                        }catch (Exception ex){
+                            Log.d("Error parsing float", ex.toString());
+                        }
+                    }
+                }
+
                 csvObjectData.put(key.toLowerCase(), entries);
+            }
+
         }
 
         CSVData obj = new CSVData(csv, csvObjectData);
