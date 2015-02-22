@@ -6,47 +6,75 @@
     android:layout_height="match_parent"
     android:background="#EBEBEB">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pc_chart"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:id="@+id/selected_item_detail_cont"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="36dp"
-        android:paddingRight="36dp">
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pc_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </com.github.mikephil.charting.charts.PieChart>
-
-        <LinearLayout
-            android:visibility="gone"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp"
+        android:layout_height="70dp"
+        android:background="#FFF"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/tv_selected_item_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/enter_field">
+            android:layout_marginLeft="20dp"
+            android:paddingTop="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"/>
+        <Button
+            android:id="@+id/bt_more_info"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:padding="5dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:text="More"
+            android:textSize="12dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_border"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/enter_field">
 
-            <Button
-                android:id="@+id/enter_product_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:padding="10dp"
-                android:hint="@string/enter_product"
-                android:textColor="@color/dark_grey"
-                android:background="@drawable/action_button" />
+        <Button
+            android:id="@+id/enter_product_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:padding="10dp"
+            android:hint="@string/enter_product"
+            android:textColor="@color/dark_grey"
+            android:background="@drawable/action_button" />
 
-            <ImageButton
-                android:id="@+id/scan_barcode_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:src="@drawable/ic_camera"
-                android:background="@drawable/action_button" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/scan_barcode_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_camera"
+            android:background="@drawable/action_button" />
     </LinearLayout>
 
-    <include layout="@layout/fab" />
+    <include layout="@layout/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

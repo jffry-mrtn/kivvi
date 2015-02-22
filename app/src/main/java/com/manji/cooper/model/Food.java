@@ -12,6 +12,8 @@ import java.util.Date;
 public class Food implements Serializable {
 
     private int key;
+    private int fid;
+    private float factor = 1.0f;
     private String mealTitle;
     private CSVData dataSet;
     private Date timestamp;
@@ -21,6 +23,7 @@ public class Food implements Serializable {
         this.mealTitle = mealTitle;
         this.dataSet = dataSet;
         this.timestamp = new Date();
+        this.fid = this.hashCode();
     }
 
     public CSVData getDataSet() {
@@ -38,4 +41,14 @@ public class Food implements Serializable {
     public int getKey() {
         return key;
     }
+
+    public void setFactor(float f){
+        factor = f;
+    }
+
+    public float getFactor(){
+        return factor;
+    }
+
+    public int getFid() { return fid; }
 }

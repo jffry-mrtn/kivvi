@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -28,16 +29,21 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.manji.cooper.custom.CSVData;
 import com.manji.cooper.custom.ItemInfo;
 import com.manji.cooper.managers.DataManager;
 import com.manji.cooper.model.Constants;
 import com.manji.cooper.model.Food;
 import com.manji.cooper.utils.LocalStorage;
+import com.manji.cooper.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements OnChartValueSelectedListener{
+
+    private final String TAG = MainFragment.class.getSimpleName();
 
     private Context context;
     private View layoutView;
@@ -49,7 +55,31 @@ public class MainFragment extends Fragment {
 
     private ArrayList<Food> foods;
 
+    HashMap<String, GraphItemDetails> graphInfo;
     private PieChart graph;
+
+    private Handler hideDetailsHandler;
+    private  View selected_item_cont;
+    private TextView tv_details;
+
+
+    private class GraphItemDetails {
+        public float total;
+        public String label;
+        private String unit;
+        public int fid;
+        public ArrayList<Food> items;
+        public int xIndex;
+
+        public GraphItemDetails(){
+            total = 0.0f;
+            xIndex = 0;
+            label = "";
+            unit = "";
+            fid = 0;
+            items = new ArrayList<>();
+        }
+    }
 
     public MainFragment() {
         super();
@@ -63,6 +93,9 @@ public class MainFragment extends Fragment {
         fabMenu = (FloatingActionsMenu) layoutView.findViewById(R.id.fab);
         fabScanBarcode = (FloatingActionButton) layoutView.findViewById(R.id.scan_barcode);
         fabEnterProduct = (FloatingActionButton) layoutView.findViewById(R.id.enter_product);
+
+        tv_details = (TextView)layoutView.findViewById(R.id.tv_selected_item_detail);
+        selected_item_cont = layoutView.findViewById(R.id.selected_item_detail_cont);
 
         fabScanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +119,8 @@ public class MainFragment extends Fragment {
     private void initGraph(){
         graph = (PieChart)layoutView.findViewById(R.id.pc_chart);
 
-        graph.setUsePercentValues(true);
         graph.setDescription("");
+        graph.setOnChartValueSelectedListener(this);
 //
 //        graph.setRotationEnabled(false);
 
@@ -98,7 +131,8 @@ public class MainFragment extends Fragment {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
         HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
-        HashMap<String, Float> totals = new HashMap<>();
+
+        graphInfo = new HashMap<>();
 
         //the relevant attributes
         ArrayList<String> xVals = new ArrayList<String>();
@@ -116,29 +150,50 @@ public class MainFragment extends Fragment {
             for (String v: xVals){
                 int index = f.getDataSet().getAttributeNames().indexOf(v);
 
-                if (totals.containsKey(v)){
+                if (graphInfo.containsKey(v)){
+                    GraphItemDetails d = graphInfo.get(v);
+                    d.items.add(f);
+
                     try{
-                        totals.put(v, Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) + totals.get(v));
-                    }catch (Exception ex){
-                        totals.put(v, 0.0f + totals.get(v));
+                        d.total += Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                    }catch (Exception ex) {
+                        Log.d(TAG, ex.toString());
+                    }finally {
+                        graphInfo.put(v, d);
                     }
+
                 }else{
+                    GraphItemDetails d = new GraphItemDetails();
+                    d.items.add(f);
+                    d.label = v;
+                    d.fid = f.getFid();
+
+                    CSVData data = f.getDataSet();
+
+                    List<String> attributes = data.getAttributeNames();
+                    int u = attributes.indexOf(v);
+
+                    d.unit = (u < 0 || u >= data.getAttributeUnits().size()) ? "" : data.getAttributeUnits().get(u);
+
                     try{
-                        totals.put(v, Float.parseFloat(items.get(f.getMealTitle()).values.get(index)));
-                    }catch (Exception ex){
-                        totals.put(v, 0.0f);
+                        d.total = Float.parseFloat(items.get(f.getMealTitle()).values.get(index)) * f.getFactor();
+                    }catch (Exception ex) {
+                        Log.d(TAG, ex.toString());
+                    }finally {
+                        graphInfo.put(v, d);
                     }
                 }
             }
         }
 
         int index = 0;
-        for (String t: totals.keySet()){
+        for (String t: graphInfo.keySet()){
             //Only include non-zero totals in graph
-            if (totals.get(t) == 0){
+            if (graphInfo.get(t).total == 0){
                 xVals.remove(t);
             }else{
-                yVals.add(new Entry(totals.get(t), index));
+                graphInfo.get(t).xIndex = index;
+                yVals.add(new Entry(graphInfo.get(t).total, index));
                 index++;
             }
         }
@@ -155,8 +210,7 @@ public class MainFragment extends Fragment {
                 getResources().getColor(R.color.graph_6),
                 getResources().getColor(R.color.graph_7) });
 
-        graph.animateY(800);
-        graph.setVisibility(View.VISIBLE);
+        graph.animateY(600);
         graph.setDrawSliceText(false);
 
         PieData pieData = new PieData(xVals, dataSet);
@@ -188,5 +242,59 @@ public class MainFragment extends Fragment {
         setGraphData();
 
         super.onResume();
+    }
+
+    @Override
+    public void onValueSelected(Entry entry, int i) {
+        if (graphInfo == null) return;
+        String res = "";
+
+        ArrayList<String> details = new ArrayList<>();
+
+        for (String g: graphInfo.keySet()){
+            if (graphInfo.get(g).xIndex == entry.getXIndex()){
+
+                res = String.format("%.01f%s from %d items\n", entry.getVal(), graphInfo.get(g).unit, graphInfo.get(g).items.size());
+
+                for (Food f: graphInfo.get(g).items) {
+                    CSVData data = f.getDataSet();
+
+                    List<String> attributes = data.getAttributeNames();
+                    int index = attributes.indexOf(graphInfo.get(g).label);
+
+                    float weight = 0.0f;
+
+                    try {
+                        weight = f.getFactor() * Float.parseFloat(DataManager.getInstance().getItems().get(f.getMealTitle()).values.get(index));
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.toString());
+                    }
+
+                    details.add(String.format("%.01f%s of '%s'\n", weight, graphInfo.get(g).unit, f.getMealTitle()));
+
+                }
+                Log.d(TAG, details.toString());
+                break;
+
+            }
+        }
+
+        tv_details.setText(res);
+        selected_item_cont.setVisibility(View.VISIBLE);
+
+        hideDetailsHandler = new Handler();
+
+        hideDetailsHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                selected_item_cont.setVisibility(View.GONE);
+                hideDetailsHandler.removeCallbacks(this);
+            }
+        }, 3500);
+    }
+
+    @Override
+    public void onNothingSelected() {
+        Log.d(TAG, "Nothing");
     }
 }
