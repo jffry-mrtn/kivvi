@@ -55,9 +55,13 @@
     <!--Home screen-->
     <string name="no_data_intructional_copy">Start adding the food items you consume so Kivvi can track your nutritional intake!</string>
     <string name="empty_chart_text">Food you haven\'t logged yet</string>
-    <string name="overview_day">You nutritional overview today</string>
-    <string name="overview_week">You nutritional overview this week</string>
-    <string name="overview_month">You nutritional overview this month</string>
+    <string name="overview_day">Your nutritional overview today</string>
+    <string name="overview_week">Your nutritional overview this week</string>
+    <string name="overview_month">Your nutritional overview this month</string>
+
+    <string name="no_food_items_day">You haven\'t logged any food today</string>
+    <string name="no_food_items_week">You haven\'t logged food any this week</string>
+    <string name="no_food_items_month">You haven\'t logged food any this month</string>
 
     <!--Errors-->
     <string name="error_retrieving">There was a network problem :( \nCheck your Internet connection and try again!</string>

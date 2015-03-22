@@ -236,13 +236,16 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             homeTitleTextView.setTextSize(20);
             homeTitleTextView.setAllCaps(false);
             time_frame_cont.setVisibility(View.GONE);
+            graph.setVisibility(View.INVISIBLE);
 
         } else {
             graph.setUsePercentValues(false);
             homeTitleTextView.setVisibility(View.VISIBLE);
             homeTitleTextView.setTextSize(18);
+            homeTitleTextView.setAllCaps(true);
 
             time_frame_cont.setVisibility(View.VISIBLE);
+            graph.setVisibility(View.VISIBLE);
 
             HashMap<String, ItemInfo> items = DataManager.getInstance().getItems();
 
@@ -258,8 +261,23 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
             xVals.add("total dietary fibre");
             xVals.add("saturated fat");
 
+            ArrayList<Food> relevantFoodItems = getRelevantFoodItems(timeStart, timeEnd);
+
+            if (relevantFoodItems.size() == 0){
+                String message =    (timeFrame == TIME_FRAME.DAY) ? getString(R.string.no_food_items_day) :
+                                    (timeFrame == TIME_FRAME.WEEK) ? getString(R.string.no_food_items_week) :
+                                    getString(R.string.no_food_items_month);
+
+                homeTitleTextView.setText(message);
+                homeTitleTextView.setVisibility(View.VISIBLE);
+                homeTitleTextView.setAllCaps(false);
+                graph.setVisibility(View.INVISIBLE);
+
+                return;
+            }
+
             //add totals of all relevant attributes into table
-            for (Food f: foods) {
+            for (Food f: relevantFoodItems) {
                 if (f.getTimestamp().after(timeStart) && f.getTimestamp().before(timeEnd)){
                     for (String v: xVals){
                         int index = f.getDataSet().getAttributeNames().indexOf(v);
@@ -298,10 +316,7 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
                             }
                         }
                     }
-                }else {
-                    return;
                 }
-
             }
 
             int index = 0;
@@ -341,6 +356,17 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         //graph.invalidate();
     }
 
+    private ArrayList<Food> getRelevantFoodItems(Date timeStart, Date timeEnd){
+        ArrayList<Food> res = new ArrayList();
+
+        for (Food f: foods) {
+            if (f.getTimestamp().after(timeStart) && f.getTimestamp().before(timeEnd))
+                res.add(f);
+        }
+
+        return res;
+    }
+
     private void showCamera() {
         ((MainActivity) getActivity()).showScannerFragment();
     }
@@ -355,7 +381,6 @@ public class MainFragment extends Fragment implements OnChartValueSelectedListen
         c.clear(Calendar.MINUTE);
         c.clear(Calendar.SECOND);
         c.clear(Calendar.MILLISECOND);
-        c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
 
         return c;
     }
